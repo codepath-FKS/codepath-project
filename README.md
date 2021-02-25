@@ -80,7 +80,6 @@ A gamified To-Do list app in which you take care of a virtual pet named Todo!
 ## Wireframes
 <img src="https://github.com/codepath-FKS/codepath-project/blob/main/wireframe_sketch.png" width=600>
 
-
 ### [BONUS] Digital Wireframes & Mockups
 
 ### [BONUS] Interactive Prototype
@@ -97,12 +96,8 @@ A gamified To-Do list app in which you take care of a virtual pet named Todo!
 | pet | pointer to [Pet] | The user's pet |
 | todoList | pointer to [To-do List] | List of the user's tasks |
 
-**To-do List**
-| Property | Type | Description |
-| -------- | -------- | -------- |
-| list     | list of pointer to [Task Item] | list of pointers to task items 
 
-**Task Item**
+**Task**
 | Property | Type | Description |
 | -------- | -------- | -------- |
 | author     | pointer to [User]     | pointer to the user who created the task     |
@@ -136,22 +131,174 @@ A gamified To-Do list app in which you take care of a virtual pet named Todo!
 | effectiveness| int | how much happiness your pet will gain feeding this food|
 
 ### Networking
-* Signup/Login Screen
+* **Signup/Login Screen**
     * (GET) [User] object
+    ```java
+    ParseUser.logInInBackground(username, password, new LogInCallback() {
+        @Override
+        public void done(ParseUser user, ParseException e) {
+        if(e!=null){
+            Log.e(TAG, "issue with login", e);
+            Toast.makeText(LoginActivity.this, "Issue with Login!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        
+        goMainActivity();
+        Toast.makeText(LoginActivity.this, "Success", Toast.LENGTH_SHORT).show();
+        }
+    });
+    ```
+    
     * (Create/POST) create new [User] 
-    
-* Pet Screen
+        ```java
+        ParseUser user = new ParseUser();
+        user.setUsername(username);  
+        user.setPassword(password);
+        user.signUpInBackground(new SignUpCallback() {
+                public void done(ParseException e) {
+                    if (e == null) {
+                     // do something
+                    } else {
+                        Log.e(TAG, "Issue with signup: ", e);
+                        Toast.makeText(LoginActivity.this, "Issue with signup", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+            });
+         ```              
+* **Pet Screen**
     * (Update/PUT) points when public tasks are approved by other users
+    ```java
+    ParseUser.getCurrentUser().put("points", newPoints);
+    ```
     * (Read/GET) points
+    ```java
+    ParseUser.getCurrentUser().get("points");
+    ```
     * (Update/PUT) when points are used at the store
+    ```java
+    ParseUser.getCurrentUser().put("points", newPoints);
+    ```
     
-* Task Screen
-    * (Create/POST) Create new [Task Item] object
+* **Task Screen**
+    * (Create/POST) Create new [Task] object
+    ```java
+    Task task = new Task();
+    task.put("author", user.getUsername());
+    task.put("description", myDesc);
+    task.put("public", myBool);
+    task.put("duedate", myDate);
+    task.saveInBackground(e -> {
+    if (e == null){
+      //Save was done
+    }else{
+      //Something went wrong
+      Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+    }
+  });
+        
+    ```
     * (Read/GET) all tasks from the user
+    ```java
+        ParseQuery<Task> query = ParseQuery.getQuery(Task.class);
+        query.include(Task.KEY_USER);
+        query.whereEqualTo(Task.KEY_USER, ParseUser.getCurrentUser()); 
+        query.addDescendingOrder(Task.KEY_CREATED_KEY);
+        query.findInBackground(new FindCallback<Task>() {
+            @Override
+            public void done(List<Task> tasks, ParseException e) {
+                if(e!= null){
+                    Log.e(TAG, "Issue with getting tasks");
+                    return;
+                }
+                allTasks.addAll(tasks);
+                adapter.notifyDataSetChanged();
+            }
+        });
+    ```
     * (Update/PUT) Specific tasks when edited
+        ```java
+        // Retrieve the object by id
+        query.getInBackground(myTask, new GetCallback<ParseObject>() {
+          public void done(List<Task> tasks, ParseException) {
+            if (e == null) {
+                myTask.put("description", "Clean the house!");
+                myTask.put("image", "myImage.jpeg");
+                myTask.put("due date", myNewDateTime);
+                myTask.saveInBackground();
+            }
+          }
+        });
+
+        ```
     * (Delete) Delete/remove a task
-    
-* Buddy Approval Screen
+        ```java
+        // Retrieve the object by id
+        query.getInBackground(myTask, new GetCallback<ParseObject>() {
+          public void done(Post post, ParseException) {
+            if (e == null) {
+                myTask.deleteInBackground();
+            }
+          }
+        });
+
+        ```
+* **Buddy Approval Screen**
     * (Read/GET) Query all public tasks from other users that have not yet been approved
+
+    ```java
+    ParseQuery<Task> query = ParseQuery.getQuery(Task.class);
+        query.include(Task.KEY_USER);
+        query.whereEqualTo(KEY_APPROVED, "false");
+        query.setLimit(20);
+        query.findInBackground(new FindCallback<Task>() {
+        @Override
+        public void done(List<Task> tasks, ParseException e) {
+            if (e != null) {
+                Log.e(TAG, "Issue with getting tasks from all users without approval", e);
+                return;
+                }
+            for (Task task: tasks){
+                allPosts.addAll(tasks);
+                adapter.notifyDataSetChanged();
+
+                }
+            });
+        }
+    ```
+    
     * (Read/GET) Query pending tasks created by the user that have not yet been approved
+    ```java 
+    ParseQuery<Task> query = ParseQuery.getQuery(Task.class);
+        query.include(Task.KEY_USER);
+        query.whereEqualTo(Task.KEY_USER, ParseUser.getCurrentUser());
+        query.whereEqualTo(KEY_APPROVED, "false");
+        query.setLimit(20);
+        query.findInBackground(new FindCallback<Task>() {
+        @Override
+        public void done(List<Task> tasks, ParseException e) {
+            if (e != null) {
+                Log.e(TAG, "Issue with getting tasks from current user without approval", e);
+                return;
+                }
+            for (Task task: tasks){
+                allPosts.addAll(tasks);
+                adapter.notifyDataSetChanged();
+
+                }
+            });
+        }
+    ```
     * (Update/PUT) tasks when approved/denied
+    ```java
+    // Retrieve the object by id
+    query.getInBackground(myTask, new GetCallback<ParseObject>() {
+      public void done(Task task, ParseException) {
+        if (e == null) {
+            myTask.put("approved", true);
+            myTask.saveInBackground();
+        }
+      }
+    });
+
+    ```
