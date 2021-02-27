@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item
+        android:id="@+id/action_task"
+        android:icon="@drawable/ic_launcher_background"
+        android:title="Tasks"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_pet"
+        android:icon="@drawable/ic_launcher_background"
+        android:title="My Pet"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_buddy"
+        android:icon="@drawable/ic_launcher_background"
+        android:title="Buddy System"
+        app:showAsAction="always" />
+</menu>
