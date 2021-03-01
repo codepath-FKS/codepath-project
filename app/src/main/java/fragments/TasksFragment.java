@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.codepath_project.R;
+import com.example.codepath_project.Task;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -44,8 +45,22 @@ public class TasksFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         rvTasks = view.findViewById(R.id.rvTasks);
-
+        // Create layout for one row in list
+        // Create the adapter
+        // create the data source
+        // set the adapter on the recycler view
+        // set the layout manager on the recycler view
     }
 
+    private void fetchTasks() {
+        ParseQuery<Task> query = ParseQuery.getQuery(Task.class);
+        query.include(Task.KEY_AUTHOR);
+        query.findInBackground(new FindCallback<Task>() {
+            @Override
+            public void done(List<Task> objects, ParseException e) {
+
+            }
+        })
+    }
 
 }
