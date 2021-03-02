@@ -14,6 +14,10 @@ public class Task extends ParseObject {
     public static final String KEY_AUTHOR = "author";
     public static final String KEY_DUEDATE = "dueDate";
 
+    public Task(){
+        // empty constructor needed for parseobj
+    }
+
     public String getDescription() { return getString(KEY_DESCRIPTION); }
 
     public void setDescription(String description) { put(KEY_DESCRIPTION, description); }
