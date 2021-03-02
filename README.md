@@ -25,24 +25,31 @@ A gamified To-Do list app in which you take care of a virtual pet named Todo!
 
 **Required Must-have Stories**
 
-* Create an account
-* Login and logout
-* Create and get reminders for a scheduled task in your to-do list
-* Choose a pet + features
-* See pet, pet status, pet features
-* Add pre-defined tasks (cleaning, eating, exercise, waking, sleeping)?
-* private task completion results in pet happiness increase
-* public task completion results in pet happiness increase + points
-* Buddy system approval of tasks + sending pictures
-* Update pet status and task bars to match completed tasks
+- [x] Create an account
+- [x] Login and logout
+- [ ] Create and get reminders for a scheduled task in your to-do list
+- [ ] Choose a pet + features
+- [ ] See pet, pet status, pet features
+- [ ] Add pre-defined tasks (cleaning, eating, exercise, waking, sleeping)?
+- [ ] private task completion results in pet happiness increase
+- [ ] public task completion results in pet happiness increase + points
+- [ ] Buddy system approval of tasks + sending pictures
+- [ ] Update pet status and task bars to match completed tasks
 
 **Optional Nice-to-have Stories**
 
-* Points system
-    * Points are given for public posts
-* Buying food with points
-* Miscellaneous: ability to pet/interact with your pet
-* Friends List
+* [ ] Points system
+* [ ] Points are given for public posts
+* [ ] Buying food with points
+* [ ] Miscellaneous: ability to pet/interact with your pet
+* [ ] Friends List
+
+**Walkthroughs**
+
+<img src='walkthrough.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+
+GIF created with [LiceCap](http://www.cockos.com/licecap/).
+
 
 ### 2. Screen Archetypes
 
