@@ -27,7 +27,7 @@
         app:layout_constraintTop_toBottomOf="@+id/etEdit" />
 
     <Button
-        android:id="@+id/btnEdit"
+        android:id="@+id/btnSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
@@ -63,7 +63,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvEditTaskTitle" />
 
     <EditText
-        android:id="@+id/editTextDate"
+        android:id="@+id/etDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="11dp"
