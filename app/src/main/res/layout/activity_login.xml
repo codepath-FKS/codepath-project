@@ -58,7 +58,7 @@
         android:textColor="#FFFFFF" />
 
     <Button
-        android:id="@+id/btnSignup"
+        android:id="@+id/btnLogout"
         android:layout_width="146dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
