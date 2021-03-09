@@ -70,6 +70,9 @@ public class TasksFragment extends Fragment {
                 adapter.notifyItemRemoved(position);
                 Toast.makeText(getContext(),"Item was completed", Toast.LENGTH_SHORT).show();
                 // TODO: give food for pet if private, else put task in buddies screen for verification
+
+                // edit task test
+
             }
         };
 
