@@ -3,13 +3,16 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">#EAA0A0</item>
+        <item name="colorPrimaryDark">#E89595</item>
+        <item name="colorAccent">#FBCECE</item>
         <item name="android:textColor">#4A4A4A</item>
     </style>
     <color name="defaultTextColor">#555559</color>
     <color name="lightTextColor">#7E7E83</color>
+    <color name="lightGrey">#9E9BA5</color>
+    <color name="lightAccent">#FBCECE</color>
+    <color name="white">#FFFFFF</color>
 
     <style name="Divider">
         <item name="android:layout_width">match_parent</item>
