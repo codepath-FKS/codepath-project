@@ -14,8 +14,8 @@
             android:id="@+id/rvBuddyTasks"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:layout_editor_absoluteX="120dp"
-            tools:layout_editor_absoluteY="312dp" />
+            tools:layout_editor_absoluteX="40dp"
+            tools:layout_editor_absoluteY="80dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
