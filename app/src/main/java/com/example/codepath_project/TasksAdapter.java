@@ -59,12 +59,20 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             cbTask = itemView.findViewById(R.id.cbTask);
+            cbTask.setChecked(false);
+           /* itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    clickListener.onItemClicked(getAdapterPosition());
+                    cbTask.setChecked(true);
+                }
+            }); */
         }
 
         public void bind(Task task) {
             // bind the task data to the task
             cbTask.setText(task.getDescription());
-            cbTask.setOnClickListener(new View.OnClickListener() {
+           cbTask.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     clickListener.onItemClicked(getAdapterPosition());
