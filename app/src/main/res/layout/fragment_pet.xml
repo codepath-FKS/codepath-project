@@ -96,24 +96,6 @@
             app:layout_constraintTop_toBottomOf="@+id/healthBar" />
 
 
-        <ImageView
-            android:id="@+id/ivFood"
-            android:layout_width="60dp"
-            android:layout_height="52dp"
-            android:src="@drawable/ic_dog_food"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ivStore" />
-
-        <ImageView
-            android:id="@+id/ivStore"
-            android:layout_width="59dp"
-            android:layout_height="39dp"
-            android:layout_marginTop="12dp"
-            android:src="@drawable/ic_store"
-            android:tint="#23FA3434"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <ImageButton
             android:id="@+id/btnSettings"
             android:layout_width="wrap_content"
@@ -125,6 +107,25 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@android:drawable/ic_menu_manage" />
+
+        <ImageButton
+            android:id="@+id/btnStore"
+            android:layout_width="63dp"
+            android:layout_height="52dp"
+            android:backgroundTint="#00FFFFFF"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_store"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/btnFood"
+            android:layout_width="64dp"
+            android:layout_height="51dp"
+            android:backgroundTint="#00FFFFFF"
+            android:src="@drawable/ic_dog_food"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnStore" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
