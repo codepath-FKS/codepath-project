@@ -14,9 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.codepath_project.BuddyTasksAdapter;
 import com.example.codepath_project.R;
 import com.example.codepath_project.Task;
-import com.example.codepath_project.TasksAdapter;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -32,7 +32,7 @@ public class BuddyFragment extends Fragment {
     public static final String TAG ="BuddyFragment";
     private RecyclerView rvTasks;
     private List<Task> allTasks;
-    private TasksAdapter adapter;
+    private BuddyTasksAdapter adapter;
 
     public BuddyFragment() {
         // Required empty public constructor
@@ -50,20 +50,8 @@ public class BuddyFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         rvTasks = view.findViewById(R.id.rvBuddyTasks);
 
-        TasksAdapter.OnClickListener onClickListener = new TasksAdapter.OnClickListener() {
-            @Override
-            public void onItemClicked(int position) {
-                Log.d("TasksFragment","Single click at position " + position);
-                deleteTask(allTasks.get(position));
-                allTasks.remove(position);
-                // notify adapter
-                adapter.notifyItemRemoved(position);
-                Toast.makeText(getContext(),"Item was completed", Toast.LENGTH_SHORT).show();
-            }
-        };
-
         allTasks = new ArrayList<>();
-        adapter = new TasksAdapter(getContext(), allTasks, onClickListener);
+        adapter = new BuddyTasksAdapter(getContext(), allTasks);
         // set the adapter on the recycler view
         rvTasks.setAdapter(adapter);
         // set the layout manager on the recycler view
@@ -73,9 +61,12 @@ public class BuddyFragment extends Fragment {
     }
 
     private void fetchTasks() {
+
         ParseQuery<Task> query = ParseQuery.getQuery(Task.class);
         query.include(Task.KEY_AUTHOR);
         query.whereNotEqualTo(Task.KEY_AUTHOR, ParseUser.getCurrentUser());
+        query.whereEqualTo("approved", false);
+        query.whereEqualTo("complete", true);
         query.whereEqualTo("public", true);
         query.findInBackground(new FindCallback<Task>() {
             @Override
@@ -87,6 +78,7 @@ public class BuddyFragment extends Fragment {
 
                 allTasks.addAll(tasks);
                 adapter.notifyDataSetChanged();
+                //Log.d("BuddyFragment","wee snaw");
             }
         });
     }

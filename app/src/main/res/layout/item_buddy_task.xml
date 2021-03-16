@@ -16,38 +16,51 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toBottomOf="@+id/ivbuddypostimg" />
 
-    <CheckBox
-        android:id="@+id/cbTask"
-        android:layout_width="178dp"
-        android:layout_height="76dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="52dp"
-        android:button="@drawable/checkbox"
-        android:buttonTint="#878787"
-        android:fontFamily="@font/hind"
-        android:paddingStart="8dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
 
-        android:textColor="@color/defaultTextColor"
+    <TextView
+        android:id="@+id/taskdesc"
+        android:layout_width="253dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="4dp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="do the dishes!" />
+        tools:text="Doing the dishes!" />
+
+    <Button
+        android:id="@+id/btnApprove"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="260dp"
+        android:layout_marginBottom="4dp"
+        android:text="Approve"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnDeny"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="140dp"
+        android:layout_marginBottom="4dp"
+        android:text="Deny"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/ivbuddypostimg"
         android:layout_width="128dp"
         android:layout_height="86dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/ivbuddypfp"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/tvBuddyTaskCreation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="12sp"
@@ -56,7 +69,7 @@
         tools:text="12/23/12 at 4:12 pm" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/ivbuddypfp"
         android:layout_width="45dp"
         android:layout_height="33dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -64,11 +77,11 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tvbuddyusername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@+id/ivbuddypfp"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="user23123" />
 
