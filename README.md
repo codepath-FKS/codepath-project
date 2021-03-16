@@ -27,9 +27,11 @@ A gamified To-Do list app in which you take care of a virtual pet named Todo!
 
 - [x] Create an account
 - [x] Login and logout
+- [x] Add & Delete Tasks
+- [x] Edit Tasks
 - [ ] Create and get reminders for a scheduled task in your to-do list
 - [ ] Choose a pet + features
-- [ ] See pet, pet status, pet features
+- [x] See pet, pet status, pet features
 - [ ] Add pre-defined tasks (cleaning, eating, exercise, waking, sleeping)?
 - [ ] private task completion results in pet happiness increase
 - [ ] public task completion results in pet happiness increase + points
