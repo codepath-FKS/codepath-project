@@ -53,7 +53,7 @@ A gamified To-Do list app in which you take care of a virtual pet named Todo!
 <img src='walkthrough_pet_screen.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 <img src='walkthroughpTask1.gif' title='Video Walkthrough' width='' alt='Video Walkthrough'>
 <img src='storeWalkthrough.gif' title='Video Walkthrough' width='' alt='Video Walkthrough'>
-<img src='buddyRepeater.gif' title='Video Walkthrough' width='' alt='Video Walkthrough'>
+<img src='buddyrepeater.gif' title='Video Walkthrough' width='' alt='Video Walkthrough'>
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 
