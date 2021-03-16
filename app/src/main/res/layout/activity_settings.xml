@@ -14,10 +14,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <ImageView
             android:id="@+id/ivprofilepic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:scaleType="centerInside"
             tools:layout_editor_absoluteX="41dp"
             tools:layout_editor_absoluteY="42dp"
             tools:srcCompat="@tools:sample/avatars" />

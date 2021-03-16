@@ -58,7 +58,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         //Glide.with(this).load(user.getParseFile("pfp").getUrl()).into(ivprofilepic);
 
-        //Glide.with(this).load(user.getParseFile("pfp").getUrl()).into(ivprofilepic);
+        Glide.with(this).load(user.getParseFile("pfp").getUrl()).into(ivprofilepic);
 
         ivprofilepic.setOnClickListener(new View.OnClickListener() {
             @Override
