@@ -1,7 +1,5 @@
 package com.example.codepath_project;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -21,17 +19,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
 import com.bumptech.glide.Glide;
-import com.esafirm.imagepicker.features.ImagePicker;
-import com.esafirm.imagepicker.features.ReturnMode;
-import com.esafirm.imagepicker.model.Image;
 import com.parse.LogOutCallback;
 import com.parse.ParseException;
-import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.io.File;
-import java.util.List;
 
 public class SettingsActivity extends AppCompatActivity {
     public static final String TAG = "SettingsActivity";
@@ -51,7 +44,7 @@ public class SettingsActivity extends AppCompatActivity {
         etUsername = findViewById(R.id.etUsername);
         ivprofilepic = findViewById(R.id.ivprofilepic);
         btnSaveProfile = findViewById(R.id.btnSaveProfile);
-        btnLogout = findViewById(R.id.btnLogout);
+        btnLogout = findViewById(R.id.btnBack);
 
         ParseUser user = ParseUser.getCurrentUser();
         etUsername.setText(user.getUsername());
