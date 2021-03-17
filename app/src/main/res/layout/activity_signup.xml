@@ -8,6 +8,30 @@
     android:layout_height="match_parent"
     android:background="@color/lightAccent">
 
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="241dp"
+        android:layout_height="165dp"
+        android:layout_marginTop="48dp"
+        android:backgroundTint="#00FFFFFF"
+        android:tint="@color/lightAccent"
+        android:tintMode="add"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_todo_logo" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="151dp"
+        android:layout_height="163dp"
+        android:layout_marginTop="64dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.638"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_todo_balloon" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/username_text_input_layout"
         android:layout_width="335dp"
@@ -85,7 +109,7 @@
         android:backgroundTint="@color/transparent"
         android:shadowColor="#00FFFFFF"
         android:stateListAnimator="@null"
-        android:text="create an account"
+        android:text="i already have an account"
         android:textColor="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -99,7 +123,7 @@
         android:layout_marginTop="8dp"
         android:backgroundTint="#00FFFFFF"
         android:shadowColor="@color/colorTextDark"
-        android:text="Login"
+        android:text="Signup"
         android:textColor="@android:color/white"
         app:defaultColor="#E89595"
         app:layout_constraintEnd_toEndOf="parent"
@@ -108,53 +132,31 @@
         app:layout_constraintTop_toBottomOf="@+id/password_text_input_layout"
         app:loaderColor="#FFFFFF" />
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="241dp"
-        android:layout_height="165dp"
-        android:layout_marginTop="24dp"
-        android:backgroundTint="#00FFFFFF"
-        android:tint="@color/lightAccent"
-        android:tintMode="add"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_todo_logo" />
-
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="105dp"
-        android:layout_height="123dp"
-        android:layout_marginTop="96dp"
-        android:tint="#00000000"
-        android:tintMode="add"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.602"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_todo" />
-
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="204dp"
         android:fontFamily="@font/caveat_brush"
-        android:text="todo"
+        android:text="Create account"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="65sp"
+        android:textSize="45sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView5" />
 
     <TextView
-        android:id="@+id/tvForgotPassword"
+        android:id="@+id/tvFunFact"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="forgot password"
-        android:textColor="@color/colorPrimaryDark"
+        android:layout_marginTop="28dp"
+        android:fontFamily="sans-serif"
+        android:singleLine="false"
+        android:text="todo /toh-doh/ \n (proper noun) \n\n the name of your new \n virtual pet!"
+        android:textAlignment="center"
+        android:textColor="@color/colorTextDark"
+        android:textSize="14sp"
+        android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnSignup" />

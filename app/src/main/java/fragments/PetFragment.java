@@ -7,12 +7,14 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.codepath_project.MainActivity;
 import com.example.codepath_project.R;
 import com.mackhartley.roundedprogressbar.RoundedProgressBar;
 import com.parse.FindCallback;
@@ -34,6 +36,8 @@ public class PetFragment extends Fragment {
     private Button btnIncrease;
     private Button btnDecrease;
     private ImageButton btnSettings;
+    private ImageButton btnStore;
+    private FragmentManager fragmentManager;
 
 
     public PetFragment() {
@@ -43,6 +47,7 @@ public class PetFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        fragmentManager = (getActivity()).getSupportFragmentManager();
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_pet, container, false);
     }
@@ -54,6 +59,7 @@ public class PetFragment extends Fragment {
         healthBar = view.findViewById(R.id.healthBar);
         btnIncrease = view.findViewById(R.id.btnIncrease);
         btnDecrease = view.findViewById(R.id.btnDecrease);
+        btnStore = view.findViewById(R.id.btnStore);
 
         btnIncrease.setOnClickListener(view1 -> {
             double current = healthBar.getProgressPercentage();
@@ -81,6 +87,15 @@ public class PetFragment extends Fragment {
 
             }
         });
+
+        btnStore.setOnClickListener(v -> {
+
+            Fragment fragment = new StoreFragment();
+            fragmentManager.beginTransaction().replace(R.id.fragmentContainer, fragment).addToBackStack("pet_fragment").commit();;
+
+        });
+
+
 
 
     }

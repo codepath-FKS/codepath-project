@@ -17,6 +17,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
+import com.royrodriguez.transitionbutton.TransitionButton;
 
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     public static final String TAG = "LoginActivity";
     private EditText etUsername;
     private EditText etPassword;
-    private Button btnLogin;
+    private TransitionButton btnLogin;
     private Button btnSignup;
 
     @Override
@@ -38,16 +39,23 @@ public class LoginActivity extends AppCompatActivity {
 
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
-        btnLogin = findViewById(R.id.btnLogin);
-        btnSignup = findViewById(R.id.btnLogout);
+        btnLogin = findViewById(R.id.btnSignup);
+        btnSignup = findViewById(R.id.btnBack);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.i(TAG, "onClick login button");
+                btnLogin.startAnimation();
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
+                if (username.isEmpty() || password.isEmpty()) {
+                    btnLogin.stopAnimation(TransitionButton.StopAnimationStyle.SHAKE, null);
+                    Toast.makeText(LoginActivity.this, "Field cannot be empty", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 loginUser(username, password);
+
             }
         });
 
@@ -55,17 +63,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.i(TAG, "onClick signup button");
-                String username = etUsername.getText().toString();
-                String password = etPassword.getText().toString();
-                if(username.isEmpty()){
-                    Toast.makeText(LoginActivity.this, "Description cannot be empty", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if(password.isEmpty()){
-                    Toast.makeText(LoginActivity.this, "There is no password!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                checkUserExists(username, password);
+                goSignUpActivity();
             }
         });
 
@@ -78,69 +76,29 @@ public class LoginActivity extends AppCompatActivity {
             public void done(ParseUser user, ParseException e) {
                 if(e!=null){
                     Log.e(TAG, "issue with login", e);
+                    btnLogin.stopAnimation(TransitionButton.StopAnimationStyle.SHAKE, null);
                     Toast.makeText(LoginActivity.this, "Issue with Login!", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                goMainActivity();
-                Toast.makeText(LoginActivity.this, "Success", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private void checkUserExists(final String username, final String password){
-        Log.i(TAG, "Checking if " + username + " is in use");
-
-        ParseQuery<ParseObject> query = new ParseQuery<>("User");
-        query.whereEqualTo("username", username);
-        // this is for doing in background
-        query.findInBackground(new FindCallback<ParseObject>() {
-            public void done(List<ParseObject> users, ParseException e) {
-                if (e == null) {
-                    if (users.size() == 0) {
-                        // if username doesn't exist in the database
-                        Log.i(TAG, "username is free");
-                        createUser(username, password);
-                    } else {
-                        // if username exists in the database
-                        Toast.makeText(LoginActivity.this, "This username is already in use!", Toast.LENGTH_SHORT).show();
-                        return;
+                btnLogin.stopAnimation(TransitionButton.StopAnimationStyle.EXPAND, new TransitionButton.OnAnimationStopEndListener() {
+                    @Override
+                    public void onAnimationStopEnd() {
+                        goMainActivity();
+                        Toast.makeText(LoginActivity.this, "Success", Toast.LENGTH_SHORT).show();
                     }
-                } else {
-                    Log.d("score", "Error: " + e.getMessage());
-                }
+                });
+
+
             }
         });
-
     }
 
-    public void createUser(final String username, final String password){
-        ParseUser user = new ParseUser();
-        user.setUsername(username);
-        user.setPassword(password);
-        user.put("points", 0);
-        user.signUpInBackground(new SignUpCallback() {
-            @Override
-            public void done(ParseException e) {
 
-                if (e != null) {
-
-                    Toast.makeText(LoginActivity.this,
-                            "Saving user failed.", Toast.LENGTH_SHORT).show();
-                    Log.w(TAG,
-                            "Error : " + e.getMessage() + ":::" + e.getCode());
-
-                } else {
-
-                    Toast.makeText(LoginActivity.this, "User Saved",
-                            Toast.LENGTH_SHORT).show();
-                    loginUser(username, password);
-                    /*Do some things here if you want to.*/
-
-                }
-
-            }
-        });
+    private void goSignUpActivity() {
+        Intent i = new Intent(this, SignupActivity.class);
+        startActivity(i);
+        finish();
     }
 
     private void goMainActivity() {
