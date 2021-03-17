@@ -37,11 +37,6 @@ public class EditTaskFragment extends Fragment {
     public static EditTaskFragment newInstance(Task task) {
         EditTaskFragment fragmentDemo = new EditTaskFragment();
         Bundle args = new Bundle();
-       /* args.putString("description", task.getDescription());
-        args.putString("dueDate", task.getDueDate().toString());
-        args.putBoolean("publicity", task.getPublicity());
-
-        */
         args.putParcelable("task", task);
         fragmentDemo.setArguments(args);
         return fragmentDemo;

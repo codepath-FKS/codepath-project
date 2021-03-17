@@ -13,6 +13,7 @@ public class Task extends ParseObject {
     public static final String KEY_PHOTO = "photo";
     public static final String KEY_AUTHOR = "author";
     public static final String KEY_DUEDATE = "dueDate";
+    public static final String KEY_PUBLICITY = "publicity";
 
     public Task(){
         // empty constructor needed for parseobj
@@ -34,4 +35,7 @@ public class Task extends ParseObject {
 
     public void setDueDate(Date date){ put(KEY_DUEDATE, date); }
 
+    public boolean getPublicity() { return getBoolean(KEY_PUBLICITY); }
+
+    public void setPublicity(boolean publicity){ put(KEY_PUBLICITY, publicity);}
 }
