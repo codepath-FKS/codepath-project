@@ -17,6 +17,11 @@ public class Task extends ParseObject {
     public static final String KEY_COMPLETE = "complete";
     public static final String KEY_APPROVED = "approved";
 
+
+    public static final String KEY_APPROVAL = "approved";
+    public static final String KEY_COMPLETE = "complete";
+    public static final String KEY_CREATEDATE = "createdAt";
+
     public Task(){
         // empty constructor needed for parseobj
     }
@@ -29,7 +34,7 @@ public class Task extends ParseObject {
 
     public void setPhoto(ParseFile parseFile){ put(KEY_PHOTO, parseFile); }
 
-    public ParseFile getAuthor() { return getParseFile(KEY_AUTHOR); }
+    public ParseUser getAuthor() { return getParseUser(KEY_AUTHOR); }
 
     public void setAuthor(ParseUser user){ put(KEY_AUTHOR, user); }
 
@@ -48,4 +53,13 @@ public class Task extends ParseObject {
     public boolean isApproved() { return getBoolean(KEY_APPROVED); }
 
     public void setApproved(boolean approved){ put(KEY_APPROVED, approved);}
-}
+
+    public boolean getApproval() { return getBoolean(KEY_APPROVAL);}
+
+    public void setApproval(Boolean boo) {put(KEY_APPROVAL, boo);}
+
+    public boolean getCompleted() { return getBoolean(KEY_COMPLETE);}
+
+    public void setCompleted(Boolean boo) {put(KEY_COMPLETE, boo);}
+
+    public Date getCreateDate() { return getDate(KEY_CREATEDATE); }

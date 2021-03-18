@@ -5,17 +5,57 @@
     android:layout_height="match_parent"
     tools:context="fragments.BuddyFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <TextView
+            android:id="@+id/tvPendingTasks"
+            android:layout_width="279dp"
+            android:layout_height="37dp"
+            android:layout_marginTop="16dp"
+            android:text="Your Pending Tasks"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.50"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvPersonalPublicTasks"
+            android:layout_width="408dp"
+            android:layout_height="102dp"
+            android:padding="10dp"
+            app:layout_constraintBottom_toTopOf="@+id/rvBuddyTasks"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvPendingTasks"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/tvBuddyTasks"
+            android:layout_width="172dp"
+            android:layout_height="39dp"
+            android:layout_marginTop="16dp"
+            android:text="Buddy Tasks"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.50"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rvPersonalPublicTasks" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvBuddyTasks"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:layout_editor_absoluteX="40dp"
-            tools:layout_editor_absoluteY="80dp" />
+            android:layout_width="406dp"
+            android:layout_height="521dp"
+            android:padding="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvBuddyTasks" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

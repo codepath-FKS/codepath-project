@@ -9,6 +9,9 @@ import android.widget.CheckBox;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.parse.ParseException;
+import com.parse.SaveCallback;
+
 import java.util.List;
 
 // THIS HAS BEEN REPLACED BY ADVTASKSADAPTER - Faiza
