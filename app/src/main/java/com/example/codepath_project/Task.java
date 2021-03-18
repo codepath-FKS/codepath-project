@@ -19,7 +19,6 @@ public class Task extends ParseObject {
 
 
     public static final String KEY_APPROVAL = "approved";
-    public static final String KEY_COMPLETE = "complete";
     public static final String KEY_CREATEDATE = "createdAt";
 
     public Task(){
