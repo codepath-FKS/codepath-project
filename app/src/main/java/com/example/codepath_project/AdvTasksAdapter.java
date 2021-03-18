@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -78,7 +77,7 @@ public class AdvTasksAdapter extends RecyclerView.Adapter<AdvTasksAdapter.ViewHo
         {
             // open editTask fragment
             eventListener.onItemViewClicked(RecyclerViewAdapterUtils.getParentViewHolderItemView(v));
-            Toast.makeText(v.getContext(),"Item was clicked in adapter", Toast.LENGTH_SHORT).show();
+            // Toast.makeText(v.getContext(),"Item was clicked in adapter", Toast.LENGTH_SHORT).show();
         }
     }
 

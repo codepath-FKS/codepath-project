@@ -26,30 +26,22 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:padding="10dp"
-            app:layout_constraintBottom_toTopOf="@+id/etAddTask"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvPetName" />
 
-        <ImageButton
-            android:id="@+id/btnAddTask"
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/faBtnAdd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_add_task_24"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:clickable="true"
+            android:src="@drawable/ic_baseline_add_24"
+            app:backgroundTint="@color/colorPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
-
-        <EditText
-            android:id="@+id/etAddTask"
-            android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:ems="10"
-            android:hint="Add a new task!"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btnAddTask"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

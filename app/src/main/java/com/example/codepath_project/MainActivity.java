@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import fragments.BuddyFragment;
+import fragments.CreateTaskFragment;
 import fragments.EditTaskFragment;
 import fragments.PetFragment;
 import fragments.TasksFragment;
@@ -31,8 +32,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         bottomNavigationView = findViewById(R.id.bottomNavigation);
-
-
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             // in this func bellow menuItem is one of the three
@@ -57,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
                 fragmentManager.beginTransaction().replace(R.id.fragmentContainer, fragment).commit();
                 return true;
             };
-
         });
         // Set default selection
         bottomNavigationView.setSelectedItemId(R.id.action_pet);
@@ -77,6 +75,16 @@ public class MainActivity extends AppCompatActivity {
     public void onTaskClicked(Task task) {
         Fragment editFragment = EditTaskFragment.newInstance(task);
         fragmentManager.beginTransaction().replace(R.id.fragmentContainer, editFragment).commit();
+    }
+
+    public void onTaskUpdated() {
+        Fragment tasksFragment = new TasksFragment();
+        fragmentManager.beginTransaction().replace(R.id.fragmentContainer, tasksFragment).commit();
+    }
+
+    public void launchCreateTask() {
+        Fragment createTaskFragment = new CreateTaskFragment();
+        fragmentManager.beginTransaction().replace(R.id.fragmentContainer, createTaskFragment).commit();
     }
 }
 

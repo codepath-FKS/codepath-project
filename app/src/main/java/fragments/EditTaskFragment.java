@@ -1,6 +1,7 @@
 package fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,13 +9,17 @@ import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.codepath_project.MainActivity;
 import com.example.codepath_project.R;
 import com.example.codepath_project.Task;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -28,18 +33,18 @@ public class EditTaskFragment extends Fragment {
     private CalendarView calView;
     private Button btnSave;
     private Task task;
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("MM-DD-YYYY");
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
 
     public EditTaskFragment() {
         // Required empty public constructor
     }
 
     public static EditTaskFragment newInstance(Task task) {
-        EditTaskFragment fragmentDemo = new EditTaskFragment();
+        EditTaskFragment fragment = new EditTaskFragment();
         Bundle args = new Bundle();
         args.putParcelable("task", task);
-        fragmentDemo.setArguments(args);
-        return fragmentDemo;
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -65,17 +70,19 @@ public class EditTaskFragment extends Fragment {
 
         if(task.getDueDate() != null)
         {
-            etDate.setText(task.getDueDate().toString());
-            calView.setDate(Long.parseLong(task.getDueDate().toString()));
+            // 18 Mar 2021 at 07:00:00 UTC
+            String dateStr = task.getDueDate().toString();
+            etDate.setText(dateStr);
+            calView.setDate(task.getDueDate().getTime());
+
         }
-        switchPublic.setChecked(task.getPublicity());
+        switchPublic.setChecked(task.isPublic());
 
         calView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                String dateStr = String.format("%02d-%02d-%04d", month, dayOfMonth, year);
+                String dateStr = String.format("%02d-%02d-%04d", month + 1, dayOfMonth, year);
                 etDate.setText(dateStr);
-
                 try {
                     Date date = dateFormat.parse(dateStr);
                 } catch (ParseException e) {
@@ -87,32 +94,30 @@ public class EditTaskFragment extends Fragment {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               /* ParseQuery<ParseObject> query = ParseQuery.getQuery("Task");
-                query.getInBackground(getArguments().getString(task.getObjectId()), (task, e) -> {
+                ParseQuery<ParseObject> query = ParseQuery.getQuery("Task");
+                query.getInBackground(task.getObjectId(), (task, e) -> {
                     if (e == null) {
-                        task.put(Task.KEY_DESCRIPTION, etEdit.getText());
-                        if(etDate.getText() != null)
-                        {
-                            task.put(Task.KEY_DUEDATE, etDate.getText());
+                        task.put(Task.KEY_DESCRIPTION, etEdit.getText().toString());
+                        if (etDate.getText() != null) {
+                            try {
+                                task.put(Task.KEY_DUEDATE, dateFormat.parse(etDate.getText().toString()));
+                            } catch (ParseException parseException) {
+                                parseException.printStackTrace();
+                            }
                         }
-                        task.put(Task.KEY_PUBLICITY, switchPublic.isChecked());
+                        task.put(Task.KEY_PUBLIC, switchPublic.isChecked());
+
                         task.saveInBackground();
+                        Toast.makeText(v.getContext(),"Task was updated!", Toast.LENGTH_SHORT).show();
+                        ((MainActivity)getActivity()).onTaskUpdated();
+
                     } else {
                         // something went wrong
-                        Log.e(TAG, "Error saving edits to task");
+                        Log.e(TAG, "Error saving edits to task: " + e);
                     }
-
-                */
-                task.setDescription(etEdit.getText().toString());
-                if(etDate.getText() != null) {
-                    try {
-                        task.setDueDate(dateFormat.parse(etDate.getText().toString()));
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                }
-                task.setPublicity(switchPublic.isChecked());
+                });
             }
         });
     }
+
 }

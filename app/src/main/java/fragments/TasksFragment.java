@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,13 +20,13 @@ import com.example.codepath_project.AdvTasksAdapter;
 import com.example.codepath_project.MainActivity;
 import com.example.codepath_project.R;
 import com.example.codepath_project.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
 import com.h6ah4i.android.widget.advrecyclerview.touchguard.RecyclerViewTouchActionGuardManager;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +42,7 @@ public class TasksFragment extends Fragment {
     private RecyclerView.Adapter wrappedAdapter;
     private RecyclerView rvTasks;
     private AdvTasksAdapter adapter;
-    ImageButton btnAdd;
+    FloatingActionButton btnAdd;
     EditText etTask;
     private List<Task> allTasks;
 
@@ -63,7 +62,7 @@ public class TasksFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         rvTasks = view.findViewById(R.id.rvTasks);
-        btnAdd = view.findViewById(R.id.btnAddTask);
+        btnAdd = view.findViewById(R.id.faBtnAdd);
         etTask = view.findViewById(R.id.etAddTask);
         layoutManager = new LinearLayoutManager(requireContext(),  RecyclerView.VERTICAL, false);
 
@@ -80,12 +79,21 @@ public class TasksFragment extends Fragment {
         adapter.setEventListener(new AdvTasksAdapter.EventListener() {
             @Override
             public void onItemRemoved(int position) {
-                /*
-                deleteTask(allTasks.get(position));
-                allTasks.remove(position);
-                adapter.notifyItemRemoved(position);
+                // swipe doesn't work so this doesn't happen :(
+                Task task = allTasks.get(position);
+                if(!task.isPublic())
+                {
+                    deleteTask(task);
+                    allTasks.remove(position);
+                    adapter.notifyItemRemoved(position);
+                }
+                else
+                {
+                    task.setComplete(true);
+                    adapter.notifyItemChanged(position);
+                }
                 // TODO: give food for pet if private, else put task in buddies screen for verification
-                 */
+
                 Toast.makeText(getContext(),"Item was completed", Toast.LENGTH_SHORT).show();
             }
 
@@ -117,6 +125,8 @@ public class TasksFragment extends Fragment {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ((MainActivity)getActivity()).launchCreateTask();
+                /*
                 Task task = new Task();
                 task.setDescription(etTask.getText().toString());
                 task.setAuthor(ParseUser.getCurrentUser());
@@ -124,7 +134,7 @@ public class TasksFragment extends Fragment {
                 allTasks.add(task);
                 adapter.notifyDataSetChanged();
                 etTask.setText("");
-                Toast.makeText(v.getContext(),"Item was added", Toast.LENGTH_SHORT).show();
+                Toast.makeText(v.getContext(),"Task was added", Toast.LENGTH_SHORT).show();
                 task.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
@@ -134,6 +144,7 @@ public class TasksFragment extends Fragment {
                         }
                     }
                 });
+                 */
             }
         });
 
@@ -149,7 +160,11 @@ public class TasksFragment extends Fragment {
 
     private void fetchTasks() {
         ParseQuery<Task> query = ParseQuery.getQuery(Task.class);
-        query.include(Task.KEY_AUTHOR);
+        // get user's uncompleted tasks
+        query.whereEqualTo(Task.KEY_AUTHOR, ParseUser.getCurrentUser());
+        query.whereNotEqualTo(Task.KEY_COMPLETE, true);
+        query.orderByAscending(Task.KEY_DUEDATE);
+
         query.findInBackground(new FindCallback<Task>() {
             @Override
             public void done(List<Task> tasks, ParseException e) {
@@ -175,7 +190,7 @@ public class TasksFragment extends Fragment {
                 //Deletes the fetched ParseObject from the database
                 object.deleteInBackground(e2 -> {
                     if(e2==null){
-                        Toast.makeText(getContext(), "Delete Successful", Toast.LENGTH_SHORT).show();
+                        Log.i(TAG, "Delete Successful");
                     }
                     else
                         {
