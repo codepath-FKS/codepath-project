@@ -22,6 +22,7 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -147,6 +148,14 @@ public class BuddyFragment extends Fragment {
         });
 
         task.setCompleted(false);
+        task.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if(e != null) {
+                    Log.e("BuddyFragment", "Error while saving task", e);
+                }
+            }
+        });
         personaladapter.notifyDataSetChanged();
         Log.d("TasksAdapter", "set task completed to false");
 

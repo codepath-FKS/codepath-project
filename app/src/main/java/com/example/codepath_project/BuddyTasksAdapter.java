@@ -19,6 +19,9 @@ import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.SaveCallback;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class BuddyTasksAdapter extends RecyclerView.Adapter<BuddyTasksAdapter.ViewHolder> {
@@ -26,24 +29,24 @@ public class BuddyTasksAdapter extends RecyclerView.Adapter<BuddyTasksAdapter.Vi
     private List<Task> tasks;
 
     public BuddyTasksAdapter(Context context, List<Task> tasks) {
-        Log.d("BuddyFragment","ho ho ho");
+       // Log.d("BuddyFragment","ho ho ho");
         this.context = context;
         this.tasks = tasks;
-        Log.d("BuddyFragment","no no no");
+       // Log.d("BuddyFragment","no no no");
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
     {
-        Log.d("BuddyFragment","whats wrong :(");
+        //Log.d("BuddyFragment","whats wrong :(");
         View view = LayoutInflater.from(context).inflate(R.layout.item_buddy_task, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Log.d("BuddyFragment","plz sir");
+       // Log.d("BuddyFragment","plz sir");
         Task task = tasks.get(position);
         holder.bind(task);
     }
@@ -79,19 +82,27 @@ public class BuddyTasksAdapter extends RecyclerView.Adapter<BuddyTasksAdapter.Vi
 
         public void bind(Task task) {
             // bind the task data to the task
-            Log.d("BuddyFragment","binding buddy fragment");
+            //Log.d("BuddyFragment","binding buddy fragment");
             taskdesc.setText(task.getDescription());
             ParseFile image = task.getPhoto();
             if(image != null){
                 Glide.with(context).load(task.getPhoto().getUrl()).into(ivpostimg);
             }
             tvusername.setText(task.getAuthor().getUsername());
-            //tvCreationDate.setText(task.getCreateDate().toString());
+
+            // Getting creation date
+            Date date = task.getCreatedAt();
+            DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+            DateFormat df2 = new SimpleDateFormat("hh:mm aa");
+            String reportDate = df.format(date);
+            String reportTime = df2.format(date);
+            tvCreationDate.setText(reportDate + " at " + reportTime);
+
             ParseFile image2 = task.getAuthor().getParseFile("pfp");
             if(image2 != null){
                 Glide.with(context).load(task.getAuthor().getParseFile("pfp").getUrl()).into(ivpfp);
             }
-            Log.d("BuddyFragment","I hope i get here");
+            //Log.d("BuddyFragment","I hope i get here");
 
             btnApprove.setOnClickListener(new View.OnClickListener(){
                 @Override
@@ -105,6 +116,21 @@ public class BuddyTasksAdapter extends RecyclerView.Adapter<BuddyTasksAdapter.Vi
                             }
                         }
                     });
+
+                    int currentPoints = task.getAuthor().getInt("points");
+                    Log.e("BuddyFragment", String.valueOf(currentPoints));
+
+                    // Cannot save a ParseUser that is not authenticated.
+                    task.getAuthor().put("points", currentPoints + 1);
+                    task.getAuthor().saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if(e != null) {
+                                Log.e("BuddyFragment", "Error while saving task", e);
+                            }
+                        }
+                    });
+
                     tasks.remove(task);
                     Toast.makeText(view.getContext(),"Item approved!", Toast.LENGTH_SHORT).show();
                     notifyDataSetChanged();

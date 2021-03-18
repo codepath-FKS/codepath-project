@@ -13,6 +13,9 @@ import android.widget.RadioGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.parse.ParseException;
+import com.parse.SaveCallback;
+
 import java.util.List;
 
 public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> {
@@ -77,8 +80,6 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
                 public void onClick(View v) {
                     clickListener.onItemClicked(getAdapterPosition());
                     cbTask.setChecked(true);
-                    task.setCompleted(false);
-                    notifyDataSetChanged();
                 }
             });
         }
