@@ -77,6 +77,8 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
                 public void onClick(View v) {
                     clickListener.onItemClicked(getAdapterPosition());
                     cbTask.setChecked(true);
+                    task.setCompleted(false);
+                    notifyDataSetChanged();
                 }
             });
         }

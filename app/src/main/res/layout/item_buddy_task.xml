@@ -72,6 +72,7 @@
         android:id="@+id/ivbuddypfp"
         android:layout_width="45dp"
         android:layout_height="33dp"
+        android:layout_marginStart="24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />

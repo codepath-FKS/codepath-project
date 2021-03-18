@@ -105,6 +105,8 @@ public class BuddyTasksAdapter extends RecyclerView.Adapter<BuddyTasksAdapter.Vi
                             }
                         }
                     });
+                    tasks.remove(task);
+                    Toast.makeText(view.getContext(),"Item approved!", Toast.LENGTH_SHORT).show();
                     notifyDataSetChanged();
                 }
             });
@@ -121,6 +123,8 @@ public class BuddyTasksAdapter extends RecyclerView.Adapter<BuddyTasksAdapter.Vi
                             }
                         }
                     });
+                    tasks.remove(task);
+                    Toast.makeText(view.getContext(),"Item denied!", Toast.LENGTH_SHORT).show();
                     notifyDataSetChanged();
                 }
             });
