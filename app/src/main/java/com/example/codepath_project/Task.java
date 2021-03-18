@@ -63,3 +63,5 @@ public class Task extends ParseObject {
     public void setCompleted(Boolean boo) {put(KEY_COMPLETE, boo);}
 
     public Date getCreateDate() { return getDate(KEY_CREATEDATE); }
+
+}
