@@ -74,28 +74,27 @@ public class PetFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         healthBar = view.findViewById(R.id.healthBar);
-        btnIncrease = view.findViewById(R.id.btnIncrease);
-        btnDecrease = view.findViewById(R.id.btnDecrease);
         btnStore = view.findViewById(R.id.btnStore);
         tvCoinCount = view.findViewById(R.id.tvCoinCount);
+        btnSettings = view.findViewById(R.id.btnSettings);
 
-        ParseQuery<Pet> query = ParseQuery.getQuery("Pet");
-        query.getInBackground(User.getCurrentUser().getString(User.KEY_PET), (pet, e) -> {
-            if (e == null) {
-                tvCoinCount.setText(String.valueOf(pet.getPoints()));
-                healthBar.setProgressPercentage(pet.getHealth(), false);
-            } else {
-                // something went wrong
-                Log.e("User.java", "Error saving edits to task: " + e);
+        // Todo: make this a func on the user class so that the callback is an argument and don't have duplicate code
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Pet");
+        query.getInBackground(User.getCurrentUser().getString(User.KEY_PET), new GetCallback<ParseObject>() {
+            public void done(ParseObject pet, ParseException e) {
+                if (e == null) {
+                    tvCoinCount.setText(String.valueOf(pet.getInt(Pet.KEY_POINTS)));
+                    healthBar.setProgressPercentage(pet.getInt(Pet.KEY_HEALTH), false);
+                } else {
+                    // something went wrong
+                    Log.e("User.java", "Error saving edits to task: " + e);
+                }
             }
         });
 
 
-
-
-
+        // Live Querying for changes on the User's pet, to make real-time updates
         ParseLiveQueryClient parseLiveQueryClient = ParseApplication.getClient();
-        // Message - Live Query
         if (parseLiveQueryClient != null) {
             ParseQuery<ParseObject> parseQuery = new ParseQuery("Pet");
             parseQuery.whereEqualTo("owner", User.getCurrentUser());
@@ -117,23 +116,7 @@ public class PetFragment extends Fragment {
             });
         }
 
-        btnIncrease.setOnClickListener(view1 -> {
-            double current = healthBar.getProgressPercentage();
-            if (current == 0){
-                current = 15.0;
-            }
-            healthBar.setProgressPercentage(current*2.0,true);
 
-        });
-
-
-        btnDecrease.setOnClickListener(view12 -> {
-            double current = healthBar.getProgressPercentage();
-            healthBar.setProgressPercentage(current*.5,true);
-        });
-
-
-        btnSettings = view.findViewById(R.id.btnSettings);
 
         final Context activityItem = getActivity();
         btnSettings.setOnClickListener(new View.OnClickListener() {
