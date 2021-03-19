@@ -1,39 +1,70 @@
 package com.example.codepath_project;
 
+import android.util.Log;
+
 import com.parse.ParseClassName;
-import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
-/// DONT USE THIS CLASS FOR ANYTHING LMAO user ParseUser
+// This class now extends parse user and can be used with static funcs like so, User.getHealth()
 
 
-@ParseClassName("User")
-public class User extends ParseObject {
-    public static final String KEY_USERNAME = "username";
-    public static final String KEY_PASSWORD = "password";
+@ParseClassName("_User")
+public class User extends ParseUser {
     public static final String KEY_POINTS = "points";
-    //public static final String KEY_PET = "userPet";
+    public static final String KEY_HEALTH = "health";
+    public static final String KEY_PET = "pet";
+    ParseUser user;
 
-    public String getUsername(){
-        return getString(KEY_USERNAME);
+    public static int getPoints(ParseUser user){
+        return user.getInt(KEY_POINTS);
     }
 
-    public void setUsername(String username){
-        put(KEY_USERNAME, username);
+//    public static int getPoints(){
+//        if (getPet() == null){
+//            return 0;
+//        }
+//        return getPet().getPoints();
+//    }
+//public static void  setPet(Pet pet){
+//    getCurrentUser().put(KEY_PET, pet);
+//}
+//
+//    public static Pet getPet(){
+//        return (Pet) getCurrentUser().get(KEY_PET);
+//    }
+
+    public void setPoints(ParseUser user, int points){
+        user.put(KEY_POINTS, points);
     }
 
-    public void setPassword(String password){
-        put(KEY_PASSWORD, password);
+    public int getHealth(ParseUser user) {
+        return user.getInt(KEY_HEALTH);
     }
 
-    public int getPoints(){
-        return getInt(KEY_POINTS);
+    public void setHealth(ParseUser user, int health) {
+        Log.e("set", "setting health to something");
+        user.put(KEY_HEALTH, health);
     }
 
-    public void setPoints(int points){
-        put(KEY_POINTS, points);
+    public static int getPoints(){
+        return getCurrentUser().getInt(KEY_POINTS);
     }
+
+
+    public static int getHealth() {
+        return getCurrentUser().getInt(KEY_HEALTH);
+    }
+
+    public static void setHealth(int health) {
+        Log.e("set", "setting health to something");
+        getCurrentUser().put(KEY_HEALTH, health);
+    }
+
+
+
+
+
 
     /*
     public ParseUser getPet(){

@@ -15,6 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.parse.FunctionCallback;
+import com.parse.ParseCloud;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.SaveCallback;
@@ -22,7 +24,9 @@ import com.parse.SaveCallback;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BuddyTasksAdapter extends RecyclerView.Adapter<BuddyTasksAdapter.ViewHolder> {
     private Context context;
@@ -120,19 +124,24 @@ public class BuddyTasksAdapter extends RecyclerView.Adapter<BuddyTasksAdapter.Vi
                     int currentPoints = task.getAuthor().getInt("points");
                     Log.e("BuddyFragment", String.valueOf(currentPoints));
 
-                    // Cannot save a ParseUser that is not authenticated.
-                    task.getAuthor().put("points", currentPoints + 1);
-                    task.getAuthor().saveInBackground(new SaveCallback() {
+                    // Giving points to the task author, using cloud func bc can't edit another user
+                    Map<String, String> parameters = new HashMap<String, String>();
+                    parameters.put("username", task.getAuthor().getUsername());
+                    // default point value of public tasks is set at 12
+                    // parameters.put("points", yourNumHere);
+                    ParseCloud.callFunctionInBackground("addPoints", parameters, new FunctionCallback<Map<String, Object>>() {
                         @Override
-                        public void done(ParseException e) {
-                            if(e != null) {
-                                Log.e("BuddyFragment", "Error while saving task", e);
+                        public void done(Map<String, Object> mapObject, ParseException e) {
+                            if (e == null) {
+                                // Everything is alright
+                                Toast.makeText(view.getContext(), mapObject.get("response").toString(), Toast.LENGTH_LONG).show();
+                            }
+                            else {
+                                Toast.makeText(view.getContext(), e.toString(), Toast.LENGTH_LONG).show();
                             }
                         }
                     });
-
                     tasks.remove(task);
-                    Toast.makeText(view.getContext(),"Item approved!", Toast.LENGTH_SHORT).show();
                     notifyDataSetChanged();
                 }
             });

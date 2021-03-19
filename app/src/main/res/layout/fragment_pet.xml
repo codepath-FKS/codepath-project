@@ -10,18 +10,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
         <TextView
             android:id="@+id/tvPetName"
             android:layout_width="84dp"
             android:layout_height="40dp"
-            android:layout_marginTop="52dp"
+            android:layout_marginTop="84dp"
             android:text="Todo"
             android:textSize="30sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
 
         <Button
             android:id="@+id/btnDecrease"
@@ -126,6 +126,24 @@
             android:src="@drawable/ic_dog_food"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnStore" />
+
+        <ImageView
+            android:id="@+id/ivCoin"
+            android:layout_width="20dp"
+            android:layout_height="16dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/ic_coin"
+            app:layout_constraintStart_toEndOf="@+id/btnStore"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvCoinCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            app:layout_constraintStart_toEndOf="@+id/ivCoin"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="0" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
