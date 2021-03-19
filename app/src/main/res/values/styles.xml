@@ -21,4 +21,9 @@
         <item name="android:background">#C3C3C3</item>
     </style>
 
+    <style name="AppTheme.PhotoActivity">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+    </style>
+
 </resources>
