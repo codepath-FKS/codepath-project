@@ -78,8 +78,7 @@ public class CreateTaskFragment extends Fragment {
                 task.saveInBackground();
                 // lowering the users health after task creation
                 // Todo: change the other instances of ParseUser to simply be the custom User class
-
-                User.setHealth(User.getHealth()-5);
+                User.addHealth(-5);
                 Toast.makeText(v.getContext(),"Task was added!", Toast.LENGTH_SHORT).show();
                 // launch taskFragment
                 ((MainActivity)getActivity()).onTaskUpdated();

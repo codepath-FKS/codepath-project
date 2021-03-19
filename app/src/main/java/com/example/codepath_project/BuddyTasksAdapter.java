@@ -1,6 +1,7 @@
 package com.example.codepath_project;
 
 import android.content.Context;
+import android.os.ParcelUuid;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,10 +16,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.parse.FindCallback;
 import com.parse.FunctionCallback;
+import com.parse.GetCallback;
 import com.parse.ParseCloud;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.text.DateFormat;
@@ -124,23 +130,8 @@ public class BuddyTasksAdapter extends RecyclerView.Adapter<BuddyTasksAdapter.Vi
                     int currentPoints = task.getAuthor().getInt("points");
                     Log.e("BuddyFragment", String.valueOf(currentPoints));
 
-                    // Giving points to the task author, using cloud func bc can't edit another user
-                    Map<String, String> parameters = new HashMap<String, String>();
-                    parameters.put("username", task.getAuthor().getUsername());
-                    // default point value of public tasks is set at 12
-                    // parameters.put("points", yourNumHere);
-                    ParseCloud.callFunctionInBackground("addPoints", parameters, new FunctionCallback<Map<String, Object>>() {
-                        @Override
-                        public void done(Map<String, Object> mapObject, ParseException e) {
-                            if (e == null) {
-                                // Everything is alright
-                                Toast.makeText(view.getContext(), mapObject.get("response").toString(), Toast.LENGTH_LONG).show();
-                            }
-                            else {
-                                Toast.makeText(view.getContext(), e.toString(), Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    });
+                    // Giving points to the task author
+                    User.addPoints(task.getAuthor());
                     tasks.remove(task);
                     notifyDataSetChanged();
                 }
@@ -164,5 +155,9 @@ public class BuddyTasksAdapter extends RecyclerView.Adapter<BuddyTasksAdapter.Vi
                 }
             });
         }
+    }
+
+    public void giveAuthorPoints(ParseUser user){
+
     }
 }

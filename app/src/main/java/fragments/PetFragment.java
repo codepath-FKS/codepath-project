@@ -19,13 +19,17 @@ import android.widget.Button;
 
 import com.example.codepath_project.MainActivity;
 import com.example.codepath_project.ParseApplication;
+import com.example.codepath_project.Pet;
 import com.example.codepath_project.R;
+import com.example.codepath_project.Task;
 import com.example.codepath_project.User;
 import com.mackhartley.roundedprogressbar.RoundedProgressBar;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,15 +79,26 @@ public class PetFragment extends Fragment {
         btnStore = view.findViewById(R.id.btnStore);
         tvCoinCount = view.findViewById(R.id.tvCoinCount);
 
+        ParseQuery<Pet> query = ParseQuery.getQuery("Pet");
+        query.getInBackground(User.getCurrentUser().getString(User.KEY_PET), (pet, e) -> {
+            if (e == null) {
+                tvCoinCount.setText(String.valueOf(pet.getPoints()));
+                healthBar.setProgressPercentage(pet.getHealth(), false);
+            } else {
+                // something went wrong
+                Log.e("User.java", "Error saving edits to task: " + e);
+            }
+        });
 
-        tvCoinCount.setText(User.getPoints()+"");
-        healthBar.setProgressPercentage(User.getHealth(),true);
-/*
+
+
+
+
         ParseLiveQueryClient parseLiveQueryClient = ParseApplication.getClient();
         // Message - Live Query
         if (parseLiveQueryClient != null) {
-            ParseQuery<ParseObject> parseQuery = new ParseQuery("_User");
-            parseQuery.whereEqualTo("username", User.getCurrentUser().getUsername());
+            ParseQuery<ParseObject> parseQuery = new ParseQuery("Pet");
+            parseQuery.whereEqualTo("owner", User.getCurrentUser());
             SubscriptionHandling<ParseObject> subscriptionHandling = parseLiveQueryClient.subscribe(parseQuery);
             subscriptionHandling.handleEvent(SubscriptionHandling.Event.UPDATE, new SubscriptionHandling.HandleEventCallback<ParseObject>() {
                 @Override
@@ -91,23 +106,17 @@ public class PetFragment extends Fragment {
                     Handler handler = new Handler(Looper.getMainLooper());
                     handler.post(new Runnable() {
                         public void run() {
-                            // also need to specifically match the case that the
-                            // CANT figure out how to get the updated value from query or object???
-                            int currentUserPts = Integer.parseInt((String) tvCoinCount.getText());
-                            currentUserPts += 12;
-                            tvCoinCount.setText(String.valueOf(currentUserPts));
-                            Toast.makeText(getContext(), "User data was updated", Toast.LENGTH_SHORT).show();
-//                            double current = healthBar.getProgressPercentage();
-//                            if (current == 0){
-//                                current = 15.0;
-//                            }
-//                            healthBar.setProgressPercentage(current*2.0,true);
+                            int newHealth = object.getInt(Pet.KEY_HEALTH);
+                            int newPoints = object.getInt(Pet.KEY_POINTS);
+                            healthBar.setProgressPercentage(newHealth, true);
+                            tvCoinCount.setText(String.valueOf(newPoints));
+
                         }
                     });
                 }
             });
         }
-*/
+
         btnIncrease.setOnClickListener(view1 -> {
             double current = healthBar.getProgressPercentage();
             if (current == 0){
@@ -144,10 +153,9 @@ public class PetFragment extends Fragment {
 
         });
 
-
-
-
     }
+
+
 
 
 

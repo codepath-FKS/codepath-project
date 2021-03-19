@@ -126,7 +126,6 @@ public class SignupActivity extends AppCompatActivity {
         user.put("health", 100);
 
 
-
         user.signUpInBackground(new SignUpCallback() {
             @Override
             public void done(ParseException e) {
@@ -143,13 +142,13 @@ public class SignupActivity extends AppCompatActivity {
                     Toast.makeText(SignupActivity.this, "User Saved",
                             Toast.LENGTH_SHORT).show();
                     // idk what im doin tbh
-//                    Pet pet = new Pet();
-//                    pet.setName("todo");
-//                    pet.setHealth(100);
-//                    pet.setPoints(100);
-//                    pet.setOwner(user);
-//                    pet.saveInBackground();
-//                    User.setPet(pet);
+                    Pet pet = new Pet();
+                    pet.setName("todo");
+                    pet.setHealth(100);
+                    pet.setPoints(100);
+                    pet.setOwner(user);
+                    pet.saveInBackground();
+                    User.setPet(pet.getObjectId());
                     loginUser(username, password);
                     /*Do some things here if you want to.*/
 
