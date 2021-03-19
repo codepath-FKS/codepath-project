@@ -1,10 +1,10 @@
 package com.example.codepath_project;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,7 +15,7 @@ import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemConstants;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAction;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultActionDoNothing;
-import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultActionMoveToSwipedDirection;
+import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultActionRemoveItem;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractSwipeableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
 
@@ -41,31 +41,64 @@ public class AdvTasksAdapter extends RecyclerView.Adapter<AdvTasksAdapter.ViewHo
 
     public static class ViewHolder extends AbstractSwipeableItemViewHolder
     {
-        private TextView txtTask;
-        View containerView;
+        public TextView txtTask;
+        public FrameLayout container;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtTask = itemView.findViewById(R.id.cbTask);
-            containerView = itemView.findViewById(R.id.divider);
+            container = itemView.findViewById(R.id.constraintLayout);
         }
 
         @NonNull
         @Override
         public View getSwipeableContainerView() {
-            return containerView;
+            return container;
         }
 
         public void bind(Task task) {
             // bind the task data to the task
             txtTask.setText(task.getDescription());
+            // TODO: set color according to Public/Private/Rejected
         }
+    }
+
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        final View v = inflater.inflate(R.layout.item_task, parent, false);
+        return new ViewHolder(v);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Task task = tasks.get(position);
+        holder.itemView.setOnClickListener(itemViewOnClickListener);
+        holder.container.setOnClickListener(swipeViewOnClickListener);
+        holder.bind(task);
+        /*
+        final SwipeableItemState swipeState = holder.getSwipeState();
+
+        if (swipeState.isUpdated()) {
+            int bgResId;
+            if (swipeState.isActive()) {
+                bgResId = R.drawable.ic_check_circle;
+            } else if (swipeState.isSwiping()) {
+                bgResId = R.drawable.ic_check_circle;
+            } else {
+                bgResId = R.drawable.ic_launcher_foreground;
+            }
+            holder.container.setBackgroundResource(bgResId);
+        }
+
+         */
+
     }
 
     public AdvTasksAdapter(Context context, List<Task> tasks) {
         this.context = context;
         this.tasks = tasks;
         itemViewOnClickListener = v -> onItemViewClick(v);
+        swipeViewOnClickListener = v -> onSwipeableViewContainerClick(v);
         // SwipeableItemAdapter requires stable ID, and also
         // have to implement the getItemId() method appropriately.
         setHasStableIds(true);
@@ -76,39 +109,32 @@ public class AdvTasksAdapter extends RecyclerView.Adapter<AdvTasksAdapter.ViewHo
         if(eventListener != null)
         {
             // open editTask fragment
-            eventListener.onItemViewClicked(RecyclerViewAdapterUtils.getParentViewHolderItemView(v));
+            eventListener.onItemViewClicked(v);
             // Toast.makeText(v.getContext(),"Item was clicked in adapter", Toast.LENGTH_SHORT).show();
         }
     }
 
-
-    @NonNull
-    @Override
-    public AdvTasksAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_task, parent, false);
-        return new AdvTasksAdapter.ViewHolder(view);
+    private void onSwipeableViewContainerClick(View v)
+    {
+        if (eventListener != null) {
+            eventListener.onItemViewClicked(RecyclerViewAdapterUtils.getParentViewHolderItemView(v));
+        }
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Task task = tasks.get(position);
-        holder.itemView.setOnClickListener(itemViewOnClickListener);
-        holder.containerView.setOnClickListener(swipeViewOnClickListener);
-        holder.bind(task);
-    }
 
     @Override
     public int getItemCount() {
         return tasks.size();
     }
 
-    public String getTaskId(int position){
-        return tasks.get(position).getObjectId();
+    @Override
+    public long getItemId(int position){
+        return tasks.get(position).getLongId();
    }
 
     @Override
     public int onGetSwipeReactionType(@NonNull ViewHolder holder, int position, int x, int y) {
-        return Swipeable.REACTION_CAN_SWIPE_LEFT;
+        return Swipeable.REACTION_CAN_SWIPE_RIGHT;
     }
 
     @Override
@@ -118,19 +144,16 @@ public class AdvTasksAdapter extends RecyclerView.Adapter<AdvTasksAdapter.ViewHo
 
     @Override
     public void onSetSwipeBackground(@NonNull ViewHolder holder, int position, int type) {
-        // You can set background color/resource to holder.itemView.
-        // The argument "type" can be one of the followings;
-        // - Swipeable.DRAWABLE_SWIPE_NEUTRAL_BACKGROUND
-        // - Swipeable.DRAWABLE_SWIPE_LEFT_BACKGROUND
-        // (- Swipeable.DRAWABLE_SWIPE_UP_BACKGROUND)
-        // (- Swipeable.DRAWABLE_SWIPE_RIGHT_BACKGROUND)
-        // (- Swipeable.DRAWABLE_SWIPE_DOWN_BACKGROUND)
-
-        if (type == Swipeable.DRAWABLE_SWIPE_LEFT_BACKGROUND) {
-            holder.itemView.setBackgroundColor(Color.YELLOW);
-        } else {
-            holder.itemView.setBackgroundColor(Color.TRANSPARENT);
+        int bgRes = 0;
+        /*
+        switch (type) {
+            case Swipeable.DRAWABLE_SWIPE_RIGHT_BACKGROUND:
+                bgRes = R.drawable.bg_swipe_item_right;
+                break;
         }
+
+         */
+        holder.itemView.setBackgroundResource(bgRes);
     }
 
     @Nullable
@@ -151,25 +174,33 @@ public class AdvTasksAdapter extends RecyclerView.Adapter<AdvTasksAdapter.ViewHo
         // (- Swipeable.RESULT_SWIPED_UP)
         // (- Swipeable.RESULT_SWIPED_RIGHT)
         // (- Swipeable.RESULT_SWIPED_DOWN)
-
         if (result == Swipeable.RESULT_SWIPED_RIGHT) {
-            return new SwipeResultActionMoveToSwipedDirection() {
-                // Optionally, you can override these three methods
-                // - void onPerformAction()
-                // - void onSlideAnimationEnd()
-                // - void onCleanUp()
+            return new SwipeRightResultAction(this, position) {
+
             };
-        }
-        else {
+        } else {
             return new SwipeResultActionDoNothing();
         }
+
     }
 
-    private static class SwipeRightAction extends SwipeResultActionMoveToSwipedDirection {
+
+    public void setEventListener(EventListener eventListener) {
+        this.eventListener = eventListener;
+    }
+
+
+    public EventListener getEventListener()
+    {
+        return eventListener;
+    }
+
+
+    private static class SwipeRightResultAction extends SwipeResultActionRemoveItem {
         private AdvTasksAdapter adapter;
         private int position;
 
-        SwipeRightAction(AdvTasksAdapter adapter, int position){
+        SwipeRightResultAction(AdvTasksAdapter adapter, int position){
             this.adapter = adapter;
             this.position = position;
         }
@@ -177,15 +208,16 @@ public class AdvTasksAdapter extends RecyclerView.Adapter<AdvTasksAdapter.ViewHo
         @Override
         protected void onPerformAction() {
             super.onPerformAction();
-            adapter.tasks.remove(position);
             adapter.notifyItemRemoved(position);
         }
 
         @Override
         protected void onSlideAnimationEnd() {
             super.onSlideAnimationEnd();
+
             if(adapter.eventListener != null)
             {
+                // delete on Parse
                 adapter.eventListener.onItemRemoved(position);
             }
         }
@@ -198,12 +230,5 @@ public class AdvTasksAdapter extends RecyclerView.Adapter<AdvTasksAdapter.ViewHo
         }
     }
 
-    public void setEventListener(EventListener eventListener) {
-        this.eventListener = eventListener;
-    }
 
-    public EventListener getEventListener()
-    {
-        return eventListener;
-    }
 }

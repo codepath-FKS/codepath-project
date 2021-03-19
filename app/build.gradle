@@ -54,4 +54,5 @@ dependencies {
     implementation 'com.github.MackHartley:RoundedProgressBar:1.0.1'
     implementation 'com.royrodriguez:transitionbutton:0.2.0'
     implementation 'com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:1.0.0'
+
 }

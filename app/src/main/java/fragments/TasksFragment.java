@@ -79,20 +79,21 @@ public class TasksFragment extends Fragment {
         adapter.setEventListener(new AdvTasksAdapter.EventListener() {
             @Override
             public void onItemRemoved(int position) {
-                // swipe doesn't work so this doesn't happen :(
+
                 Task task = allTasks.get(position);
-                if(!task.isPublic())
+                if(task.isPublic() == false)
                 {
                     deleteTask(task);
                     allTasks.remove(position);
-                    adapter.notifyItemRemoved(position);
+                    // TODO: give food for pet
                 }
                 else
                 {
+                    // TODO: if Public, launch PhotoFragment
                     task.setComplete(true);
-                    adapter.notifyItemChanged(position);
+                    task.saveInBackground();
+                    allTasks.remove(position);
                 }
-                // TODO: give food for pet if private, else put task in buddies screen for verification
 
                 Toast.makeText(getContext(),"Item was completed", Toast.LENGTH_SHORT).show();
             }

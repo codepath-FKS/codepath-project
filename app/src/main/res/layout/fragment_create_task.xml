@@ -10,8 +10,10 @@
         android:id="@+id/tvAddTaskTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/hind"
         android:text="Add Task"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/defaultTextColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -52,20 +54,24 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:ems="10"
+        android:fontFamily="@font/hind"
         android:hint="Add a task!"
+        android:textColor="@color/defaultTextColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvAddTaskTitle" />
 
     <EditText
         android:id="@+id/etDate"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="20dp"
         android:ems="10"
+        android:fontFamily="@font/hind"
         android:hint="Due Date"
         android:inputType="date"
+        android:textColor="@color/defaultTextColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etAddTask" />
 

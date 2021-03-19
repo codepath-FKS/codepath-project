@@ -63,4 +63,16 @@ public class Task extends ParseObject {
 
     public Date getCreateDate() { return getDate(KEY_CREATEDATE); }
 
+    // for AdvTasksadapter.getItemId
+    public long getLongId() {
+        String id = getObjectId();
+        long longId = 0;
+        for(int i = 0; i < 10; i++)
+        {
+            longId *= 10;
+            longId += id.charAt(i);
+        }
+        return longId;
+    }
+
 }
