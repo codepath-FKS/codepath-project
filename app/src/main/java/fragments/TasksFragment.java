@@ -1,5 +1,6 @@
 package fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import com.example.codepath_project.AdvTasksAdapter;
 import com.example.codepath_project.MainActivity;
+import com.example.codepath_project.PhotoActivity;
 import com.example.codepath_project.R;
 import com.example.codepath_project.Task;
 import com.example.codepath_project.User;
@@ -78,26 +80,24 @@ public class TasksFragment extends Fragment {
         adapter = new AdvTasksAdapter(getContext(), allTasks);
 
         adapter.setEventListener(new AdvTasksAdapter.EventListener() {
+            // for private tasks
             @Override
             public void onItemRemoved(int position) {
-
                 Task task = allTasks.get(position);
-                if(task.isPublic() == false)
-                {
-                    deleteTask(task);
-                    allTasks.remove(position);
-                    // Give the user points for completing a task
-                    User.addPoints(User.getCurrentUser(), 6);
-                }
-                else
-                {
-                    // TODO: if Public, launch PhotoFragment
-                    task.setComplete(true);
-                    task.saveInBackground();
-                    allTasks.remove(position);
-                }
-
-                Toast.makeText(getContext(),"Item was completed", Toast.LENGTH_SHORT).show();
+                 deleteTask(task);
+                 allTasks.remove(position);
+                 // Give the user points for completing a task
+                 User.addPoints(User.getCurrentUser(), 6);
+                 Toast.makeText(getContext(),"Item was completed", Toast.LENGTH_SHORT).show();
+            }
+            // for public tasks
+            @Override
+            public void onItemVerify(int position) {
+              // launch PhotoActivity
+                Intent i = new Intent(getContext(), PhotoActivity.class);
+                i.putExtra("task", allTasks.get(position));
+                startActivity(i);
+                allTasks.remove(position);
             }
 
             @Override
