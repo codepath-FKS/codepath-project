@@ -5,10 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemAdapter;
@@ -19,6 +21,8 @@ import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAct
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractSwipeableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class AdvTasksAdapter extends RecyclerView.Adapter<AdvTasksAdapter.ViewHolder>
@@ -45,11 +49,17 @@ public class AdvTasksAdapter extends RecyclerView.Adapter<AdvTasksAdapter.ViewHo
     public static class ViewHolder extends AbstractSwipeableItemViewHolder
     {
         public TextView txtTask;
+        public TextView txtType;
+        public TextView tvDueDate;
+        public ImageView ivType;
         public FrameLayout container;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtTask = itemView.findViewById(R.id.cbTask);
+            txtType = itemView.findViewById(R.id.tvTaskCategory);
+            tvDueDate = itemView.findViewById(R.id.tvDueDate);
+            ivType = itemView.findViewById(R.id.ivCategoryMarker);
             container = itemView.findViewById(R.id.frameLayout2);
         }
 
@@ -62,7 +72,31 @@ public class AdvTasksAdapter extends RecyclerView.Adapter<AdvTasksAdapter.ViewHo
         public void bind(Task task) {
             // bind the task data to the task
             txtTask.setText(task.getDescription());
-            // TODO: set color according to Public/Private/Rejected
+            if(task.getDueDate() != null)
+            {
+                tvDueDate.setText(formatDate(task.getDueDate()));
+            }
+
+            String type;
+            int color;
+            if(task.getRejected() == false)
+            {
+                type = task.isPublic() ? "Public" : "Private";
+                color = task.isPublic() ? ContextCompat.getColor(container.getContext(), R.color.colorPurple) :
+                        ContextCompat.getColor(container.getContext(), R.color.colorPrimary);
+            }
+            else
+            {
+                type = "Rejected";
+                color = ContextCompat.getColor(container.getContext(), R.color.colorError);
+            }
+            txtType.setText(type);
+            ivType.setColorFilter(color);
+        }
+
+        private String formatDate(Date dueDate) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("E");
+            return dateFormat.format(dueDate);
         }
     }
 

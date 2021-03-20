@@ -16,7 +16,7 @@ public class Task extends ParseObject {
     public static final String KEY_PUBLIC = "public";
     public static final String KEY_COMPLETE = "complete";
     public static final String KEY_APPROVED = "approved";
-
+    public static final String KEY_REJECTED = "rejected";
 
     public static final String KEY_APPROVAL = "approved";
     public static final String KEY_CREATEDATE = "createdAt";
@@ -61,7 +61,12 @@ public class Task extends ParseObject {
 
     public void setCompleted(Boolean boo) {put(KEY_COMPLETE, boo);}
 
+    public boolean getRejected() { return getBoolean(KEY_REJECTED); }
+
+    public void setRejected(Boolean boo) {put(KEY_REJECTED, boo);}
+
     public Date getCreateDate() { return getDate(KEY_CREATEDATE); }
+
 
     // for AdvTasksadapter.getItemId
     public long getLongId() {
