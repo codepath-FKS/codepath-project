@@ -22,9 +22,12 @@ import androidx.core.content.FileProvider;
 import com.parse.ParseFile;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 
 public class PhotoActivity extends AppCompatActivity {
     public static final String TAG = "PhotoActivity";
+    public static final int GALLERY_ACTIVITY_REQUEST_CODE = 41;
     public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
     private TextView tvPrompt;
     private Button btnCamera;
@@ -33,6 +36,7 @@ public class PhotoActivity extends AppCompatActivity {
     private ImageView ivPhoto;
     private Task task;
     private File photoFile;
+    private Uri fileProvider;
     public String photoFileName = "photo.jpg";
 
 
@@ -47,11 +51,21 @@ public class PhotoActivity extends AppCompatActivity {
         btnGallery = findViewById(R.id.btnGallery);
         btnSubmit = findViewById(R.id.btnSubmit);
         ivPhoto = findViewById(R.id.ivPhoto);
+        photoFile = getPhotoFileUri(photoFileName);
+        // Create a File reference for future access
+        fileProvider = FileProvider.getUriForFile(PhotoActivity.this, "com.codepath.fileprovider.todo", photoFile);
 
         btnCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 launchCamera();
+            }
+        });
+
+        btnGallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                launchGallery();
             }
         });
 
@@ -81,18 +95,17 @@ public class PhotoActivity extends AppCompatActivity {
         getWindow().setLayout((int)(width*.8), (int)(height*.2));
     }
 
+    private void launchGallery() {
+        // TODO: Display gallery
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
+        startActivityForResult(intent, GALLERY_ACTIVITY_REQUEST_CODE);
+    }
+
     private void launchCamera() {
         // create Intent to take a picture and return control to the calling application
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Create a File reference for future access
-        photoFile = getPhotoFileUri(photoFileName);
-
-        // wrap File object into a content provider
-        // required for API >= 24
-        // See https://guides.codepath.com/android/Sharing-Content-with-Intents#sharing-files-with-api-24-or-higher
-        Uri fileProvider = FileProvider.getUriForFile(PhotoActivity.this, "com.codepath.fileprovider.todo", photoFile);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
-
         // If you call startActivityForResult() using an intent that no app can handle, your app will crash.
         // So as long as the result is not null, it's safe to use the intent.
         if (intent.resolveActivity(this.getPackageManager()) != null) {
@@ -104,27 +117,60 @@ public class PhotoActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-
-                // by this point we have the camera photo on disk
-                Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
-                tvPrompt.setVisibility(View.GONE);
                 // RESIZE WINDOW
                 DisplayMetrics dm = new DisplayMetrics();
                 getWindowManager().getDefaultDisplay().getMetrics(dm);
                 int width = dm.widthPixels;
                 int height = dm.heightPixels;
                 getWindow().setLayout((int)(width*.8), (int)(height*.65));
+                // Make room - remove prompt
+                tvPrompt.setVisibility(View.GONE);
 
-                // RESIZE BITMAP, see section below
-                // Load the taken image into a preview
+                // retrieve camera photo from disk
+                Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
+
+                // Load the taken image into the preview
                 ivPhoto.setImageBitmap(takenImage);
                 ivPhoto.setVisibility(View.VISIBLE);
                 btnSubmit.setVisibility(View.VISIBLE);
+            }
+            else
+            { // Result was a failure
+                Toast.makeText(this, "Photo wasn't taken!", Toast.LENGTH_SHORT).show();
+            }
+        }
+        else if(requestCode == GALLERY_ACTIVITY_REQUEST_CODE)
+        {
+            if (resultCode == RESULT_OK)
+            {
+                // RESIZE WINDOW
+                DisplayMetrics dm = new DisplayMetrics();
+                getWindowManager().getDefaultDisplay().getMetrics(dm);
+                int width = dm.widthPixels;
+                int height = dm.heightPixels;
+                getWindow().setLayout((int)(width*.8), (int)(height*.65));
+                // Make room - remove prompt
+                tvPrompt.setVisibility(View.GONE);
 
-            } else { // Result was a failure
-                Toast.makeText(this, "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
+                fileProvider = data.getData();
+                Bitmap chosenImage;
+                try {
+                    chosenImage = BitmapFactory.decodeStream(getContentResolver().openInputStream(fileProvider));
+                    ivPhoto.setImageBitmap(chosenImage);
+                    FileOutputStream fostream = new FileOutputStream(photoFile);
+                    chosenImage.compress(Bitmap.CompressFormat.PNG, 50, fostream);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                ivPhoto.setVisibility(View.VISIBLE);
+                btnSubmit.setVisibility(View.VISIBLE);
+            }
+            else
+            { // Result was a failure
+                Toast.makeText(this, "Photo wasn't selected!", Toast.LENGTH_SHORT).show();
             }
         }
     }

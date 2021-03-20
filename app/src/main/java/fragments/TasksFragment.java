@@ -95,7 +95,7 @@ public class TasksFragment extends Fragment {
                 Intent i = new Intent(getContext(), PhotoActivity.class);
                 i.putExtra("task", allTasks.get(position));
                 startActivity(i);
-                //allTasks.remove(position);
+                allTasks.remove(position);
             }
 
             @Override

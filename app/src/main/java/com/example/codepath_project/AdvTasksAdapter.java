@@ -91,7 +91,6 @@ public class AdvTasksAdapter extends RecyclerView.Adapter<AdvTasksAdapter.ViewHo
         // SwipeableItemAdapter requires stable ID, and also
         // have to implement the getItemId() method appropriately.
         setHasStableIds(true);
-
     }
 
 
