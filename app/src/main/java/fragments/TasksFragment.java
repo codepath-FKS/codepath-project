@@ -20,6 +20,7 @@ import com.example.codepath_project.AdvTasksAdapter;
 import com.example.codepath_project.MainActivity;
 import com.example.codepath_project.R;
 import com.example.codepath_project.Task;
+import com.example.codepath_project.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
 import com.h6ah4i.android.widget.advrecyclerview.touchguard.RecyclerViewTouchActionGuardManager;
@@ -85,7 +86,8 @@ public class TasksFragment extends Fragment {
                 {
                     deleteTask(task);
                     allTasks.remove(position);
-                    // TODO: give food for pet
+                    // Give the user points for completing a task
+                    User.addPoints(User.getCurrentUser(), 6);
                 }
                 else
                 {

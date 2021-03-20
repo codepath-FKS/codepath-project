@@ -131,7 +131,7 @@ public class BuddyTasksAdapter extends RecyclerView.Adapter<BuddyTasksAdapter.Vi
                     Log.e("BuddyFragment", String.valueOf(currentPoints));
 
                     // Giving points to the task author
-                    User.addPoints(task.getAuthor());
+                    User.addPoints(task.getAuthor(), 12);
                     tasks.remove(task);
                     notifyDataSetChanged();
                 }

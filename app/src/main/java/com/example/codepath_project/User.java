@@ -30,7 +30,8 @@ public class User extends ParseUser {
         query.getInBackground(getCurrentUser().getString(KEY_PET), (pet, e) -> {
             if (e == null) {
                 int hlth = pet.getInt(Pet.KEY_HEALTH);
-                pet.put(Pet.KEY_HEALTH, hlth + newHealth);
+                hlth = (hlth + newHealth) < 0 ? 0 : hlth + newHealth;
+                pet.put(Pet.KEY_HEALTH, hlth);
                 pet.saveInBackground();
             } else {
                 // something went wrong
@@ -39,12 +40,12 @@ public class User extends ParseUser {
         });
     }
 
-    public static void addPoints(ParseUser user){
+    public static void addPoints(ParseUser user, int newPoints){
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Pet");
         query.getInBackground(user.getString(KEY_PET), (pet, e) -> {
             if (e == null) {
                 int pts = pet.getInt(Pet.KEY_POINTS);
-                pet.put(Pet.KEY_POINTS, pts + 12);
+                pet.put(Pet.KEY_POINTS, pts + newPoints);
                 pet.saveInBackground();
             } else {
                 // something went wrong

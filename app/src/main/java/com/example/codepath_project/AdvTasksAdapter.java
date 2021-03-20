@@ -47,7 +47,7 @@ public class AdvTasksAdapter extends RecyclerView.Adapter<AdvTasksAdapter.ViewHo
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtTask = itemView.findViewById(R.id.cbTask);
-            container = itemView.findViewById(R.id.constraintLayout);
+            container = itemView.findViewById(R.id.frameLayout2);
         }
 
         @NonNull
