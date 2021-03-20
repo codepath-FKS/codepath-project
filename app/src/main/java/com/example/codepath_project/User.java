@@ -46,7 +46,7 @@ public class User extends ParseUser {
 
     public static void addPoints(ParseUser user, int newPoints){
         ParseQuery<Pet> query = ParseQuery.getQuery(Pet.class);
-        query.whereEqualTo(Pet.KEY_OWNER, getCurrentUser());
+        query.whereEqualTo(Pet.KEY_OWNER, user);
         query.getFirstInBackground(new GetCallback<Pet>() {
             public void done(Pet pet, ParseException e) {
                 if (e == null) {
