@@ -13,6 +13,8 @@ public class Pet extends ParseObject {
     public static final String KEY_HEALTH = "health";
     public static final String KEY_NAME = "name";
     public static final String KEY_OWNER = "owner";
+    public static final String KEY_PURCHASES = "purchases";
+    public static final String KEY_BG = "bg";
 
     public Pet(){
         // empty constructor needed for parseobj

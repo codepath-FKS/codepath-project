@@ -21,6 +21,7 @@ import com.example.codepath_project.MainActivity;
 import com.example.codepath_project.ParseApplication;
 import com.example.codepath_project.Pet;
 import com.example.codepath_project.R;
+import com.example.codepath_project.StoreItem;
 import com.example.codepath_project.Task;
 import com.example.codepath_project.User;
 import com.mackhartley.roundedprogressbar.RoundedProgressBar;
@@ -35,6 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,10 +53,12 @@ public class PetFragment extends Fragment {
     private RoundedProgressBar healthBar;
     private Button btnIncrease;
     private Button btnDecrease;
+    private ImageView ivBackground;
     private ImageButton btnSettings;
     private ImageButton btnStore;
     private TextView tvCoinCount;
     private FragmentManager fragmentManager;
+    private List<Integer> purchases;
 
 
     public PetFragment() {
@@ -73,6 +77,7 @@ public class PetFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        ivBackground = view.findViewById(R.id.ivBackground);
         healthBar = view.findViewById(R.id.healthBar);
         btnStore = view.findViewById(R.id.btnStore);
         tvCoinCount = view.findViewById(R.id.tvCoinCount);
@@ -84,7 +89,11 @@ public class PetFragment extends Fragment {
             public void done(ParseObject pet, ParseException e) {
                 if (e == null) {
                     tvCoinCount.setText(String.valueOf(pet.getInt(Pet.KEY_POINTS)));
-                    healthBar.setProgressPercentage(pet.getInt(Pet.KEY_HEALTH), false);
+                    healthBar.setProgressPercentage(pet.getInt(Pet.KEY_HEALTH), true);
+                    purchases = pet.getList(Pet.KEY_PURCHASES);
+                    List<StoreItem> backgrounds = StoreItem.storeItemData();
+                    ivBackground.setImageResource(backgrounds.get(pet.getInt(Pet.KEY_BG)).getRes());
+
                 } else {
                     // something went wrong
                     Log.e("User.java", "Error saving edits to task: " + e);
@@ -109,6 +118,10 @@ public class PetFragment extends Fragment {
                             int newPoints = object.getInt(Pet.KEY_POINTS);
                             healthBar.setProgressPercentage(newHealth, true);
                             tvCoinCount.setText(String.valueOf(newPoints));
+                            purchases = object.getList(Pet.KEY_PURCHASES);
+                            List<StoreItem> backgrounds = StoreItem.storeItemData();
+                            ivBackground.setImageResource(backgrounds.get(object.getInt(Pet.KEY_BG)).getRes());
+
 
                         }
                     });
@@ -130,7 +143,7 @@ public class PetFragment extends Fragment {
 
         btnStore.setOnClickListener(v -> {
 
-            Fragment fragment = new StoreFragment().newInstance(Integer.parseInt((String) tvCoinCount.getText()));
+            Fragment fragment = new StoreFragment().newInstance(Integer.parseInt((String) tvCoinCount.getText()), (ArrayList<Integer>) purchases);
             fragmentManager.beginTransaction().replace(R.id.fragmentContainer, fragment).addToBackStack("pet_fragment").commit();
 
 
