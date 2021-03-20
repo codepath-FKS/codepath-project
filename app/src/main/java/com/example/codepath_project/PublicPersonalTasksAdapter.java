@@ -9,14 +9,11 @@ import android.widget.CheckBox;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.parse.ParseException;
-import com.parse.SaveCallback;
-
 import java.util.List;
 
 // THIS HAS BEEN REPLACED BY ADVTASKSADAPTER - Faiza
 
-public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> {
+public class PublicPersonalTasksAdapter extends RecyclerView.Adapter<PublicPersonalTasksAdapter.ViewHolder> {
 
     private Context context;
     private List<Task> tasks;
@@ -26,7 +23,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
         void onItemClicked(int position);
     }
 
-    public TasksAdapter(Context context, List<Task> tasks, OnClickListener clickListener) {
+    public PublicPersonalTasksAdapter(Context context, List<Task> tasks, OnClickListener clickListener) {
         this.context = context;
         this.tasks = tasks;
         this.clickListener = clickListener;
@@ -41,7 +38,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TasksAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull PublicPersonalTasksAdapter.ViewHolder holder, int position) {
         Task task = tasks.get(position);
         holder.bind(task);
     }
