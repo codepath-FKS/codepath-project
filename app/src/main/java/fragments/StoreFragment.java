@@ -94,6 +94,8 @@ public class StoreFragment extends Fragment implements StoreItemAdapter.ItemClic
         if (requestCode == 1) {
             if(resultCode == RESULT_OK) {
                 int position = data.getIntExtra("position", 0);
+                userPointTotal =  data.getIntExtra("points", 0);
+                tvUserPointTotal.setText(String.valueOf(userPointTotal));
                 StoreItem storeItem = data.getParcelableExtra("storeItem");
                 if (storeItem.getId() > 2){
                     adapter.setItemPurchased(storeItem.getId(), position);

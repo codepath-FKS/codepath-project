@@ -71,6 +71,7 @@ public class StoreItemDetailActivity extends AppCompatActivity {
                     Intent intent = new Intent();
                     intent.putExtra("position", itemPosition);
                     intent.putExtra("storeItem", storeItem);
+                    intent.putExtra("points", userTotalPoints - storeItem.getCost());
                     setResult(RESULT_OK, intent);
                     finish();
                 }
