@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.parse.FindCallback;
 import com.parse.LogInCallback;
+import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -122,10 +123,8 @@ public class SignupActivity extends AppCompatActivity {
         ParseUser user = new ParseUser();
         user.setUsername(username);
         user.setPassword(password);
-        user.put("points", 0);
-        user.put("health", 100);
-
-
+        Pet pet = new Pet();
+        pet.saveInBackground();
         user.signUpInBackground(new SignUpCallback() {
             @Override
             public void done(ParseException e) {
@@ -141,14 +140,10 @@ public class SignupActivity extends AppCompatActivity {
 
                     Toast.makeText(SignupActivity.this, "User Saved",
                             Toast.LENGTH_SHORT).show();
-                    // idk what im doin tbh
-                    Pet pet = new Pet();
-                    pet.setName("todo");
-                    pet.setHealth(100);
-                    pet.setPoints(100);
-                    pet.setOwner(user);
+                    // Todo: not this
+
+                    pet.setOwner(ParseUser.getCurrentUser());
                     pet.saveInBackground();
-                    User.setPet(pet.getObjectId());
                     loginUser(username, password);
                     /*Do some things here if you want to.*/
 

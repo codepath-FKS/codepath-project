@@ -56,18 +56,16 @@ public class StoreItemDetailActivity extends AppCompatActivity {
 
         if (storeItem.isPurchased()) {
             btnPurchase.setEnabled(false);
-        } else if (!storeItem.isPurchased() || storeItem.getId() < 3) { // if its not purchased or food, you can't equip it
+        } else if (!storeItem.isPurchased() || storeItem.getId() < 2) { // if its not purchased or food, you can't equip it
             btnEquip.setEnabled(false);
         }
 
         btnPurchase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Todo: error checking for if user has enough points to afford it
                 if (userTotalPoints >= storeItem.getCost()) {
                     User.purchase(storeItem.getId(), storeItem.getCost());
                     Toast.makeText(StoreItemDetailActivity.this, "Successfully Purchased!", Toast.LENGTH_SHORT).show();
-                    btnPurchase.setEnabled(true);
 
                     // https://stackoverflow.com/questions/14292398/how-to-pass-data-from-2nd-activity-to-1st-activity-when-pressed-back-android
                     Intent intent = new Intent();

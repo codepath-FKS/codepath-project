@@ -15,6 +15,8 @@ public class Pet extends ParseObject {
     public static final String KEY_OWNER = "owner";
     public static final String KEY_PURCHASES = "purchases";
     public static final String KEY_BG = "bg";
+    public static final String KEY_FOOD = "food";
+    public static final String KEY_FANCY_FOOD = "fancyFood";
 
     public Pet(){
         // empty constructor needed for parseobj
@@ -35,6 +37,19 @@ public class Pet extends ParseObject {
     public ParseUser getOwner() { return getParseUser(KEY_OWNER); }
 
     public void setOwner(ParseUser user){ put(KEY_OWNER, user); }
+
+    public void setPurchases(int[] purchases){
+        put(KEY_PURCHASES, purchases);
+    }
+
+    public void setFoods(int food, int fancyFood){
+        put(KEY_FOOD, food);
+        put(KEY_FANCY_FOOD, fancyFood);
+    }
+
+    public void setBG(int bg){
+        put(KEY_BG, bg);
+    }
 
 
 

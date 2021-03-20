@@ -27,6 +27,7 @@ import com.example.codepath_project.User;
 import com.mackhartley.roundedprogressbar.RoundedProgressBar;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
+import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -51,8 +52,10 @@ import com.parse.livequery.SubscriptionHandling;
 public class PetFragment extends Fragment {
     public static final String TAG ="PetFragment";
     private RoundedProgressBar healthBar;
-    private Button btnIncrease;
-    private Button btnDecrease;
+    private ImageButton btnFood;
+    private ImageButton btnFancyFood;
+    private TextView tvFoodCount;
+    private TextView tvFancyFoodCount;
     private ImageView ivBackground;
     private ImageButton btnSettings;
     private ImageButton btnStore;
@@ -82,24 +85,32 @@ public class PetFragment extends Fragment {
         btnStore = view.findViewById(R.id.btnStore);
         tvCoinCount = view.findViewById(R.id.tvCoinCount);
         btnSettings = view.findViewById(R.id.btnSettings);
+        btnFood = view.findViewById(R.id.btnFood);
+        btnFancyFood = view.findViewById(R.id.btnFancyFood);
+        tvFoodCount = view.findViewById(R.id.tvFoodCount);
+        tvFancyFoodCount = view.findViewById(R.id.tvFancyFoodCount);
 
         // Todo: make this a func on the user class so that the callback is an argument and don't have duplicate code
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Pet");
-        query.getInBackground(User.getCurrentUser().getString(User.KEY_PET), new GetCallback<ParseObject>() {
-            public void done(ParseObject pet, ParseException e) {
+        ParseQuery<Pet> query = ParseQuery.getQuery(Pet.class);
+        query.whereEqualTo(Pet.KEY_OWNER, User.getCurrentUser());
+        query.getFirstInBackground(new GetCallback<Pet>() {
+            public void done(Pet pet, ParseException e) {
                 if (e == null) {
                     tvCoinCount.setText(String.valueOf(pet.getInt(Pet.KEY_POINTS)));
                     healthBar.setProgressPercentage(pet.getInt(Pet.KEY_HEALTH), true);
                     purchases = pet.getList(Pet.KEY_PURCHASES);
                     List<StoreItem> backgrounds = StoreItem.storeItemData();
                     ivBackground.setImageResource(backgrounds.get(pet.getInt(Pet.KEY_BG)).getRes());
+                    tvFoodCount.setText("x" +String.valueOf(pet.getInt(Pet.KEY_FOOD)));
+                    tvFancyFoodCount.setText("x" +String.valueOf(pet.getInt(Pet.KEY_FANCY_FOOD)));
 
                 } else {
                     // something went wrong
-                    Log.e("User.java", "Error saving edits to task: " + e);
+                    Log.e("PetFragment.java", "Error saving edits to task: " + e);
                 }
             }
         });
+
 
 
         // Live Querying for changes on the User's pet, to make real-time updates
@@ -121,6 +132,8 @@ public class PetFragment extends Fragment {
                             purchases = object.getList(Pet.KEY_PURCHASES);
                             List<StoreItem> backgrounds = StoreItem.storeItemData();
                             ivBackground.setImageResource(backgrounds.get(object.getInt(Pet.KEY_BG)).getRes());
+                            tvFoodCount.setText("x" +String.valueOf(object.getInt(Pet.KEY_FOOD)));
+                            tvFancyFoodCount.setText("x" +String.valueOf(object.getInt(Pet.KEY_FANCY_FOOD)));
 
 
                         }
@@ -142,11 +155,17 @@ public class PetFragment extends Fragment {
         });
 
         btnStore.setOnClickListener(v -> {
-
             Fragment fragment = new StoreFragment().newInstance(Integer.parseInt((String) tvCoinCount.getText()), (ArrayList<Integer>) purchases);
             fragmentManager.beginTransaction().replace(R.id.fragmentContainer, fragment).addToBackStack("pet_fragment").commit();
 
+        });
 
+        btnFancyFood.setOnClickListener(v -> {
+            User.foodHealthUpdate(0, -1, 10);
+        });
+
+        btnFood.setOnClickListener(v -> {
+            User.foodHealthUpdate(-1, 0, 5);
         });
 
     }
