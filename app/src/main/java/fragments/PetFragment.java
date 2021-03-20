@@ -130,7 +130,7 @@ public class PetFragment extends Fragment {
 
         btnStore.setOnClickListener(v -> {
 
-            Fragment fragment = new StoreFragment();
+            Fragment fragment = new StoreFragment().newInstance(Integer.parseInt((String) tvCoinCount.getText()));
             fragmentManager.beginTransaction().replace(R.id.fragmentContainer, fragment).addToBackStack("pet_fragment").commit();
 
 

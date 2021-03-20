@@ -1,24 +1,40 @@
 package com.example.codepath_project;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+
+import java.lang.reflect.Field;
+import java.util.List;
+
+import fragments.StoreFragment;
 
 public class StoreItemAdapter extends RecyclerView.Adapter<StoreItemAdapter.ViewHolder> {
 
     private String[] mData;
+    private List<StoreItem> sData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
+    private Context context;
 
     // data is passed into the constructor
-    public StoreItemAdapter(Context context, String[] data) {
+    public StoreItemAdapter(Context context, List<StoreItem> data) {
+        this.context = context;
         this.mInflater = LayoutInflater.from(context);
-        this.mData = data;
+        this.sData = data;
     }
 
     // inflates the cell layout from xml when needed
@@ -32,29 +48,43 @@ public class StoreItemAdapter extends RecyclerView.Adapter<StoreItemAdapter.View
     // binds the data to the TextView in each cell
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.myTextView.setText(mData[position]);
+        StoreItem storeItem = sData.get(position);
+        holder.bind(storeItem);
     }
 
     // total number of cells
     @Override
     public int getItemCount() {
-        return mData.length;
+        return sData.size();
     }
 
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView myTextView;
+        private TextView tvStoreItemName;
+        private TextView tvStoreItemCost;
+        private ImageView ivStoreItem;
 
         ViewHolder(View itemView) {
             super(itemView);
-            myTextView = itemView.findViewById(R.id.info_text);
+            tvStoreItemName = itemView.findViewById(R.id.tvStoreItemName);
+            tvStoreItemCost = itemView.findViewById(R.id.tvStoreItemCost);
+            ivStoreItem = itemView.findViewById(R.id.ivStoreItem);
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
             if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
+        }
+
+        public void bind(StoreItem storeItem) {
+            // bind the post data to the view element
+            tvStoreItemName.setText(storeItem.getName());
+            tvStoreItemCost.setText(String.valueOf(storeItem.getCost()));
+            ivStoreItem.setImageResource(R.drawable.bg_outdoor_winter);
+
+
         }
     }
 
