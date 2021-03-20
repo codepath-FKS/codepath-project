@@ -33,16 +33,16 @@ A gamified To-Do list app in which you take care of a virtual pet named Todo!
 - [ ] Choose a pet + features
 - [x] See pet, pet status, pet features
 - [ ] Add pre-defined tasks (cleaning, eating, exercise, waking, sleeping)?
-- [ ] private task completion results in pet happiness increase
-- [ ] public task completion results in pet happiness increase + points
+- [x] private task completion results in pet happiness increase
+- [x] public task completion results in pet happiness increase + points
 - [ ] Buddy system approval of tasks + sending pictures
-- [ ] Update pet status and task bars to match completed tasks
+- [x] Update pet status and task bars to match completed tasks
 
 **Optional Nice-to-have Stories**
 
-* [ ] Points system
-* [ ] Points are given for public posts
-* [ ] Buying food with points
+* [x] Points system
+* [x] Points are given for public posts
+* [x] Buying food with points
 * [ ] Miscellaneous: ability to pet/interact with your pet
 * [ ] Friends List
 
@@ -53,6 +53,12 @@ Market
 <img src='market.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 Feeding your pet
 <img src='feeding.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+Creating and updating Tasks
+<img src='createUpdateTask.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+Completing Private Tasks
+<img src='CompletePrivateTask.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+Completing Public Tasks
+<img src='completePublicTask.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 Public buddy tasks
 <img src='buddytasks2.gif' title='Video Walkthrough' width='' alt='Video Walkthrough'>
 Personal public
