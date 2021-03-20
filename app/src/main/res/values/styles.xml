@@ -8,6 +8,7 @@
         <item name="colorAccent">#FBCECE</item>
         <item name="android:textColor">#4A4A4A</item>
     </style>
+    <color name="colorPurple">#BC78B8</color>
     <color name="defaultTextColor">#555559</color>
     <color name="colorTextDark">#DD7D7D</color>
     <color name="lightTextColor">#7E7E83</color>
