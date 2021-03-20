@@ -12,18 +12,32 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.example.codepath_project.StoreItem;
 import com.example.codepath_project.StoreItemAdapter;
 import com.example.codepath_project.R;
 
+import java.util.Arrays;
+import java.util.List;
+
 //https://stackoverflow.com/questions/40587168/simple-android-grid-example-using-recyclerview-with-gridlayoutmanager-like-the
 public class StoreFragment extends Fragment implements StoreItemAdapter.ItemClickListener{
-
     StoreItemAdapter adapter;
     private RecyclerView rvNumbers;
+    private TextView tvUserPointTotal;
+
 
     public StoreFragment() {
         // Required empty public constructor
+    }
+
+    public static StoreFragment newInstance(int points) {
+        StoreFragment fragment = new StoreFragment();
+        Bundle args = new Bundle();
+        args.putInt("points", points);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -36,16 +50,22 @@ public class StoreFragment extends Fragment implements StoreItemAdapter.ItemClic
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Bundle bundle = this.getArguments();
+        int points = bundle.getInt("points", 0);
+        tvUserPointTotal = view.findViewById(R.id.tvUserPointTotal);
+        tvUserPointTotal.setText(String.valueOf(points));
 
         rvNumbers = view.findViewById(R.id.rvNumbers);
 
         // data to populate the RecyclerView with
-        String[] data = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21"};
+        StoreItem[] sData = {
+                            new StoreItem(R.drawable.bg_outdoor_winter, 23, "Winterland"),
+                            new StoreItem(R.drawable.bg_outdoor_abstract, 20, "Abstract")};
 
         // set up the RecyclerView
         int numberOfColumns = 2;
         rvNumbers.setLayoutManager(new GridLayoutManager(getContext(), numberOfColumns));
-        adapter = new StoreItemAdapter(getContext(), data);
+        adapter = new StoreItemAdapter(getContext(), Arrays.asList(sData));
         adapter.setClickListener(this);
         rvNumbers.setAdapter(adapter);
     }
