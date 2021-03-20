@@ -1,6 +1,7 @@
 package com.example.codepath_project;
 
 import android.content.Context;
+import android.os.ParcelUuid;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,14 +16,23 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.parse.FindCallback;
+import com.parse.FunctionCallback;
+import com.parse.GetCallback;
+import com.parse.ParseCloud;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BuddyTasksAdapter extends RecyclerView.Adapter<BuddyTasksAdapter.ViewHolder> {
     private Context context;
@@ -120,19 +130,9 @@ public class BuddyTasksAdapter extends RecyclerView.Adapter<BuddyTasksAdapter.Vi
                     int currentPoints = task.getAuthor().getInt("points");
                     Log.e("BuddyFragment", String.valueOf(currentPoints));
 
-                    // Cannot save a ParseUser that is not authenticated.
-                    task.getAuthor().put("points", currentPoints + 1);
-                    task.getAuthor().saveInBackground(new SaveCallback() {
-                        @Override
-                        public void done(ParseException e) {
-                            if(e != null) {
-                                Log.e("BuddyFragment", "Error while saving task", e);
-                            }
-                        }
-                    });
-
+                    // Giving points to the task author
+                    User.addPoints(task.getAuthor(), 12);
                     tasks.remove(task);
-                    Toast.makeText(view.getContext(),"Item approved!", Toast.LENGTH_SHORT).show();
                     notifyDataSetChanged();
                 }
             });
@@ -155,5 +155,9 @@ public class BuddyTasksAdapter extends RecyclerView.Adapter<BuddyTasksAdapter.Vi
                 }
             });
         }
+    }
+
+    public void giveAuthorPoints(ParseUser user){
+
     }
 }

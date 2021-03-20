@@ -17,17 +17,15 @@ import androidx.fragment.app.Fragment;
 import com.example.codepath_project.MainActivity;
 import com.example.codepath_project.R;
 import com.example.codepath_project.Task;
+
+import com.example.codepath_project.User;
 import com.parse.ParseUser;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CreateTaskFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class CreateTaskFragment extends Fragment {
 
     private EditText etAddTask;
@@ -78,6 +76,8 @@ public class CreateTaskFragment extends Fragment {
                 }
 
                 task.saveInBackground();
+                // lowering the users health after task creation
+                User.addHealth(-5);
                 Toast.makeText(v.getContext(),"Task was added!", Toast.LENGTH_SHORT).show();
                 // launch taskFragment
                 ((MainActivity)getActivity()).onTaskUpdated();

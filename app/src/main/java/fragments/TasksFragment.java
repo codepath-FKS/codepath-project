@@ -22,6 +22,7 @@ import com.example.codepath_project.MainActivity;
 import com.example.codepath_project.PhotoActivity;
 import com.example.codepath_project.R;
 import com.example.codepath_project.Task;
+import com.example.codepath_project.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
 import com.h6ah4i.android.widget.advrecyclerview.touchguard.RecyclerViewTouchActionGuardManager;
@@ -85,13 +86,14 @@ public class TasksFragment extends Fragment {
                 Task task = allTasks.get(position);
                  deleteTask(task);
                  allTasks.remove(position);
-                 // TODO: give points
+                 // Give the user points for completing a task
+                 User.addPoints(User.getCurrentUser(), 6);
                  Toast.makeText(getContext(),"Item was completed", Toast.LENGTH_SHORT).show();
             }
             // for public tasks
             @Override
             public void onItemVerify(int position) {
-                // TODO: if Public, launch PhotoActivity
+              // launch PhotoActivity
                 Intent i = new Intent(getContext(), PhotoActivity.class);
                 i.putExtra("task", allTasks.get(position));
                 startActivity(i);
