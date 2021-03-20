@@ -82,7 +82,7 @@ public class StoreItemAdapter extends RecyclerView.Adapter<StoreItemAdapter.View
             // bind the post data to the view element
             tvStoreItemName.setText(storeItem.getName());
             tvStoreItemCost.setText(String.valueOf(storeItem.getCost()));
-            ivStoreItem.setImageResource(R.drawable.bg_outdoor_winter);
+            ivStoreItem.setImageResource(storeItem.getRes());
 
 
         }
