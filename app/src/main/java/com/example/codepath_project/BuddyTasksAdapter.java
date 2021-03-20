@@ -132,6 +132,7 @@ public class BuddyTasksAdapter extends RecyclerView.Adapter<BuddyTasksAdapter.Vi
 
                     // Giving points to the task author
                     User.addPoints(task.getAuthor(), 12);
+                    Toast.makeText(view.getContext(),"Item approved!", Toast.LENGTH_SHORT).show();
                     tasks.remove(task);
                     notifyDataSetChanged();
                 }
@@ -141,6 +142,7 @@ public class BuddyTasksAdapter extends RecyclerView.Adapter<BuddyTasksAdapter.Vi
                 @Override
                 public void onClick(View view) {
                     task.setCompleted(false);
+                    task.setRejected(true);
                     task.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
