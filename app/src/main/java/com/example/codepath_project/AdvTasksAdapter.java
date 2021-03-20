@@ -34,10 +34,13 @@ public class AdvTasksAdapter extends RecyclerView.Adapter<AdvTasksAdapter.ViewHo
     private View.OnClickListener itemViewOnClickListener;
     private View.OnClickListener swipeViewOnClickListener;
 
+
     public interface EventListener {
         void onItemRemoved(int position);
+        void onItemVerify(int position);
         void onItemViewClicked(View v);
     }
+
 
     public static class ViewHolder extends AbstractSwipeableItemViewHolder
     {
@@ -63,11 +66,13 @@ public class AdvTasksAdapter extends RecyclerView.Adapter<AdvTasksAdapter.ViewHo
         }
     }
 
+
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         final View v = inflater.inflate(R.layout.item_task, parent, false);
         return new ViewHolder(v);
     }
+
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
@@ -75,24 +80,8 @@ public class AdvTasksAdapter extends RecyclerView.Adapter<AdvTasksAdapter.ViewHo
         holder.itemView.setOnClickListener(itemViewOnClickListener);
         holder.container.setOnClickListener(swipeViewOnClickListener);
         holder.bind(task);
-        /*
-        final SwipeableItemState swipeState = holder.getSwipeState();
-
-        if (swipeState.isUpdated()) {
-            int bgResId;
-            if (swipeState.isActive()) {
-                bgResId = R.drawable.ic_check_circle;
-            } else if (swipeState.isSwiping()) {
-                bgResId = R.drawable.ic_check_circle;
-            } else {
-                bgResId = R.drawable.ic_launcher_foreground;
-            }
-            holder.container.setBackgroundResource(bgResId);
-        }
-
-         */
-
     }
+
 
     public AdvTasksAdapter(Context context, List<Task> tasks) {
         this.context = context;
@@ -102,17 +91,17 @@ public class AdvTasksAdapter extends RecyclerView.Adapter<AdvTasksAdapter.ViewHo
         // SwipeableItemAdapter requires stable ID, and also
         // have to implement the getItemId() method appropriately.
         setHasStableIds(true);
-
     }
+
 
     private void onItemViewClick(View v) {
         if(eventListener != null)
         {
             // open editTask fragment
             eventListener.onItemViewClicked(v);
-            // Toast.makeText(v.getContext(),"Item was clicked in adapter", Toast.LENGTH_SHORT).show();
         }
     }
+
 
     private void onSwipeableViewContainerClick(View v)
     {
@@ -151,37 +140,21 @@ public class AdvTasksAdapter extends RecyclerView.Adapter<AdvTasksAdapter.ViewHo
                 bgRes = R.drawable.bg_swipe_item_right;
                 break;
         }
-
          */
         holder.itemView.setBackgroundResource(bgRes);
     }
 
+
     @Nullable
     @Override
     public SwipeResultAction onSwipeItem(@NonNull ViewHolder holder, int position, int result) {
-        // Return sub class of the SwipeResultAction.
-        //
-        // Available base (abstract) classes are;
-        // - SwipeResultActionDefault
-        // - SwipeResultActionMoveToSwipedDirection
-        // - SwipeResultActionRemoveItem
-        // - SwipeResultActionDoNothing
 
-        // The argument "result" can be one of the followings;
-        //
-        // - Swipeable.RESULT_CANCELED
-        // - Swipeable.RESULT_SWIPED_LEFT
-        // (- Swipeable.RESULT_SWIPED_UP)
-        // (- Swipeable.RESULT_SWIPED_RIGHT)
-        // (- Swipeable.RESULT_SWIPED_DOWN)
         if (result == Swipeable.RESULT_SWIPED_RIGHT) {
             return new SwipeRightResultAction(this, position) {
-
             };
         } else {
             return new SwipeResultActionDoNothing();
         }
-
     }
 
 
@@ -208,7 +181,14 @@ public class AdvTasksAdapter extends RecyclerView.Adapter<AdvTasksAdapter.ViewHo
         @Override
         protected void onPerformAction() {
             super.onPerformAction();
-            adapter.notifyItemRemoved(position);
+            if(adapter.tasks.get(position).isPublic() == false)
+            {
+                adapter.notifyItemRemoved(position);
+            }
+            else
+            {
+                adapter.notifyItemChanged(position);
+            }
         }
 
         @Override
@@ -217,8 +197,14 @@ public class AdvTasksAdapter extends RecyclerView.Adapter<AdvTasksAdapter.ViewHo
 
             if(adapter.eventListener != null)
             {
-                // delete on Parse
-                adapter.eventListener.onItemRemoved(position);
+                if(adapter.tasks.get(position).isPublic() == false)
+                {
+                    adapter.eventListener.onItemRemoved(position);
+                }
+                else
+                {
+                    adapter.eventListener.onItemVerify(position);
+                }
             }
         }
 
