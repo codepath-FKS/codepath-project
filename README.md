@@ -49,19 +49,33 @@ A gamified To-Do list app in which you take care of a virtual pet named Todo!
 **Walkthroughs**
 Creating an account
 <img src='create.gif' title='Video Walkthrough' width='250' alt='Video Walkthrough' />
+
 Market
+
 <img src='market.gif' title='Video Walkthrough' width='250' alt='Video Walkthrough' />
+
 Feeding your pet
+
 <img src='feeding.gif' title='Video Walkthrough' width='250' alt='Video Walkthrough' />
+
 Creating and updating Tasks
+
 <img src='createUpdateTask.gif' title='Video Walkthrough' width='250' alt='Video Walkthrough' />
+
 Completing Private Tasks
+
 <img src='CompletePrivateTask.gif' title='Video Walkthrough' width='250' alt='Video Walkthrough' />
+
 Completing Public Tasks
+
 <img src='completePublicTask.gif' title='Video Walkthrough' width='250' alt='Video Walkthrough' />
+
 Public buddy tasks
+
 <img src='buddytasks2.gif' title='Video Walkthrough' width='250' alt='Video Walkthrough'>
+
 Personal public
+
 <img src='personalpublic.gif' title='Video Walkthrough' width='250' alt='Video Walkthrough'>
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
