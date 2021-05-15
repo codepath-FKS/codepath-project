@@ -4,4 +4,12 @@
     <color name="colorPrimaryDark">#E89595</color>
     <color name="colorAccent">#F1B7B7</color>
     <color name="greyedOut">#28000000</color>
+
+    <color name="colorPurple">#BC78B8</color>
+    <color name="defaultTextColor">#555559</color>
+    <color name="colorTextDark">#DD7D7D</color>
+    <color name="lightTextColor">#7E7E83</color>
+    <color name="lightGrey">#9E9BA5</color>
+    <color name="lightAccent">#FBCECE</color>
+    <color name="white">#FFFFFF</color>
 </resources>

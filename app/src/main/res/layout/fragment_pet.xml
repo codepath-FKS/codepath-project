@@ -46,6 +46,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvPetName" />
 
+
         <com.mackhartley.roundedprogressbar.RoundedProgressBar
             android:id="@+id/healthBar"
             android:layout_width="284dp"
@@ -112,6 +113,7 @@
             android:id="@+id/btnFood"
             android:layout_width="64dp"
             android:layout_height="51dp"
+            android:layout_marginTop="4dp"
             android:backgroundTint="#00FFFFFF"
             android:src="@drawable/ic_dog_food"
             app:layout_constraintStart_toStartOf="parent"
@@ -126,6 +128,30 @@
             app:layout_constraintStart_toEndOf="@+id/btnStore"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <com.google.android.material.chip.Chip
+            android:id="@+id/tvFoodCount"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="56dp"
+            android:text="dsfsdf"
+            android:textColor="@color/white"
+            app:chipBackgroundColor="@color/colorAccent"
+            app:layout_constraintStart_toEndOf="@+id/btnFood"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="x3" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/tvFancyFoodCount"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="dsfsdf"
+            android:textColor="@color/white"
+            app:chipBackgroundColor="@color/colorAccent"
+            app:layout_constraintStart_toEndOf="@+id/btnFancyFood"
+            app:layout_constraintTop_toBottomOf="@+id/tvFoodCount"
+            tools:text="x3" />
+
         <TextView
             android:id="@+id/tvCoinCount"
             android:layout_width="wrap_content"
@@ -134,25 +160,6 @@
             app:layout_constraintStart_toEndOf="@+id/ivCoin"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="0" />
-
-        <TextView
-            android:id="@+id/tvFancyFoodCount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="x5"
-            app:layout_constraintStart_toEndOf="@+id/btnFancyFood"
-            app:layout_constraintTop_toTopOf="@+id/btnFancyFood" />
-
-        <TextView
-            android:id="@+id/tvFoodCount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="TextView"
-            app:layout_constraintStart_toEndOf="@+id/btnFood"
-            app:layout_constraintTop_toBottomOf="@+id/btnStore"
-            tools:text="x3" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

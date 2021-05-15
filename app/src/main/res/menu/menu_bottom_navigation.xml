@@ -2,7 +2,11 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-
+    <item
+        android:id="@+id/action_buddy"
+        android:icon="@drawable/ic_group"
+        android:title=""
+        app:showAsAction="always" />
     <item
         android:id="@+id/action_task"
         android:icon="@drawable/ic_todo_list"
@@ -14,8 +18,13 @@
         android:title=""
         app:showAsAction="always" />
     <item
-        android:id="@+id/action_buddy"
-        android:icon="@drawable/ic_group"
+        android:id="@+id/action_store"
+        android:icon="@drawable/ic_store_nav"
+        android:title=""
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@drawable/ic_settings"
         android:title=""
         app:showAsAction="always" />
 </menu>

@@ -90,7 +90,7 @@ public class PublicPersonalTasksFragment  extends Fragment {
                     Log.e("PersonalBuddyFragment","Issue with getting tasks", e);
                     return;
                 }
-
+                Log.e("sadadasdsa", String.valueOf(tasks));
                 personalTasks.addAll(tasks);
                 personaladapter.notifyDataSetChanged();
                 //Log.d("BuddyFragment","wee snaw");

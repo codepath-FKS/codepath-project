@@ -40,16 +40,13 @@ public class MainActivity extends AppCompatActivity {
                 switch (menuItem.getItemId()) {
                     case R.id.action_task:
                         fragment = new TasksFragment();
-                        Toast.makeText(getApplicationContext(), "task list", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.action_pet:
                         fragment = new PetFragment();
-                        Toast.makeText(getApplicationContext(), "pet ", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.action_buddy:
                     default:
                         fragment = new BuddyFragment();
-                        Toast.makeText(getApplicationContext(), "buddy", Toast.LENGTH_SHORT).show();
                         break;
                 }
                 fragmentManager.beginTransaction().replace(R.id.fragmentContainer, fragment).commit();

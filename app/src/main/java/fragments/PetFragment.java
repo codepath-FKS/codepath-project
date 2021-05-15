@@ -24,6 +24,7 @@ import com.example.codepath_project.R;
 import com.example.codepath_project.StoreItem;
 import com.example.codepath_project.Task;
 import com.example.codepath_project.User;
+import com.google.android.material.chip.Chip;
 import com.mackhartley.roundedprogressbar.RoundedProgressBar;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
@@ -54,8 +55,8 @@ public class PetFragment extends Fragment {
     private RoundedProgressBar healthBar;
     private ImageButton btnFood;
     private ImageButton btnFancyFood;
-    private TextView tvFoodCount;
-    private TextView tvFancyFoodCount;
+    private Chip tvFoodCount;
+    private Chip tvFancyFoodCount;
     private ImageView ivBackground;
     private ImageButton btnSettings;
     private ImageButton btnStore;
@@ -101,8 +102,8 @@ public class PetFragment extends Fragment {
                     purchases = pet.getList(Pet.KEY_PURCHASES);
                     List<StoreItem> backgrounds = StoreItem.storeItemData();
                     ivBackground.setImageResource(backgrounds.get(pet.getInt(Pet.KEY_BG)).getRes());
-                    tvFoodCount.setText("x" +String.valueOf(pet.getInt(Pet.KEY_FOOD)));
-                    tvFancyFoodCount.setText("x" +String.valueOf(pet.getInt(Pet.KEY_FANCY_FOOD)));
+                    tvFoodCount.setText("x " +String.valueOf(pet.getInt(Pet.KEY_FOOD)));
+                    tvFancyFoodCount.setText("x " +String.valueOf(pet.getInt(Pet.KEY_FANCY_FOOD)));
 
                 } else {
                     // something went wrong
@@ -132,8 +133,8 @@ public class PetFragment extends Fragment {
                             purchases = object.getList(Pet.KEY_PURCHASES);
                             List<StoreItem> backgrounds = StoreItem.storeItemData();
                             ivBackground.setImageResource(backgrounds.get(object.getInt(Pet.KEY_BG)).getRes());
-                            tvFoodCount.setText("x" +String.valueOf(object.getInt(Pet.KEY_FOOD)));
-                            tvFancyFoodCount.setText("x" +String.valueOf(object.getInt(Pet.KEY_FANCY_FOOD)));
+                            tvFoodCount.setText("x " +String.valueOf(object.getInt(Pet.KEY_FOOD)));
+                            tvFancyFoodCount.setText("x " +String.valueOf(object.getInt(Pet.KEY_FANCY_FOOD)));
 
 
                         }

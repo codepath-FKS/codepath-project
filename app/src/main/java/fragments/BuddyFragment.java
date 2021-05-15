@@ -14,20 +14,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager2.widget.ViewPager2;
 
-import com.example.codepath_project.BuddyTasksAdapter;
 import com.example.codepath_project.R;
-import com.example.codepath_project.Task;
-import com.example.codepath_project.PublicPersonalTasksAdapter;
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseQuery;
-import com.parse.ParseUser;
-import com.parse.SaveCallback;
+import com.example.codepath_project.ViewPagerAdapter;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -51,24 +45,22 @@ public class BuddyFragment extends Fragment {
 
     }
 
+private ViewPager2 mViewPager;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        btnpersonal = view.findViewById(R.id.btnpersonalpublic);
-        btnbuddy = view.findViewById(R.id.btnBuddyTasks);
+        mViewPager = view.findViewById(R.id.myPager);//Get ViewPager2 view
+        mViewPager.setAdapter(new ViewPagerAdapter(getActivity()));//Attach the adapter with our ViewPagerAdapter passing the host activity
 
-        btnpersonal.setOnClickListener(v -> {
-            Fragment fragment = new PublicPersonalTasksFragment().newInstance();
-            fragmentManager.beginTransaction().replace(R.id.fragmentContainer, fragment).addToBackStack("buddy_fragment").commit();
-        });
-
-        btnbuddy.setOnClickListener(v -> {
-            Fragment fragment = new PublicBuddyTasksFragment().newInstance();
-            fragmentManager.beginTransaction().replace(R.id.fragmentContainer, fragment).addToBackStack("buddy_fragment").commit();
-
-        });
-
+        TabLayout tabLayout = view.findViewById(R.id.tabs);
+        new TabLayoutMediator(tabLayout, mViewPager,
+                new TabLayoutMediator.TabConfigurationStrategy() {
+                    @Override
+                    public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+                        tab.setText(((ViewPagerAdapter)(mViewPager.getAdapter())).mFragmentNames[position]);//Sets tabs names as mentioned in ViewPagerAdapter fragmentNames array, this can be implemented in many different ways.
+                    }
+                }
+        ).attach();
     }
-
 }
